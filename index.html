@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MINEHEART — Official MH Tierlist</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mc: ['"Press Start 2P"', 'monospace'],
+          },
+          colors: {
+            plumBg: '#140f1d',
+            plumCard: '#1e162c',
+            plumSurface: '#281d3b',
+            plumBorder: '#35274e',
+            mhPink: '#ff2e88',
+            mhPinkLight: '#ff4da6',
+            mhSilver: '#f8fafc',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #140f1d;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* 3D Minecraft-styled MINEHEART logo: Silver-white "MINE" + Hot-pink "HEART" */
+    .mh-logo-mine {
+      font-family: 'Press Start 2P', monospace;
+      letter-spacing: -0.05em;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0px 3px 0px #334155) drop-shadow(0px 6px 14px rgba(248, 250, 252, 0.16));
+    }
+
+    .mh-logo-heart {
+      font-family: 'Press Start 2P', monospace;
+      letter-spacing: -0.05em;
+      background: linear-gradient(180deg, #ff7ab8 0%, #ff2e88 55%, #b01057 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0px 3px 0px #5c062b) drop-shadow(0px 6px 16px rgba(255, 46, 136, 0.35));
+    }
+
+    /* Rank Badge Gradients */
+    .rank-badge-1 {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    }
+    .rank-badge-2 {
+      background: linear-gradient(135deg, #f8fafc 0%, #64748b 100%);
+      box-shadow: 0 4px 14px rgba(248, 250, 252, 0.2);
+    }
+    .rank-badge-3 {
+      background: linear-gradient(135deg, #ff4da6 0%, #9d174d 100%);
+      box-shadow: 0 4px 14px rgba(255, 46, 136, 0.3);
+    }
+    .rank-badge-other {
+      background: #281d3b;
+      border: 1px solid #35274e;
+    }
+
+    /* Tier Pills */
+    .tier-badge-ht {
+      background: rgba(245, 158, 11, 0.16);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .tier-badge-mid {
+      background: rgba(255, 46, 136, 0.16);
+      color: #ff7ab8;
+      border: 1px solid rgba(255, 46, 136, 0.4);
+    }
+    .tier-badge-lt {
+      background: rgba(168, 85, 247, 0.16);
+      color: #e9d5ff;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+    }
+    .tier-badge-retired {
+      background: rgba(248, 250, 252, 0.12);
+      color: #f8fafc;
+      border: 1px dashed rgba(255, 77, 166, 0.65);
+    }
+
+    /* Folder-style Rankings Tabs */
+    .ranking-tab {
+      position: relative;
+      border-top-left-radius: 0.85rem;
+      border-top-right-radius: 0.85rem;
+      border: 1px solid transparent;
+      border-bottom: none;
+      transition: all 0.15s ease;
+    }
+    .ranking-tab.active {
+      background-color: #1e162c;
+      border-color: #35274e;
+      color: #f8fafc;
+    }
+    .ranking-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 18%;
+      right: 18%;
+      height: 2px;
+      background-color: #ff2e88;
+      border-radius: 9999px;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #140f1d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #35274e;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4e3973;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-[#ff2e88]/30 selection:text-white">
+
+  <!-- Reusable 3D Blocky Heart Emblem SVG Template (Hot Pink & Silver-White) -->
+  <template id="mh-heart-svg-tpl">
+    <svg viewBox="0 0 32 32" class="w-full h-full drop-shadow-[0_4px_10px_rgba(255,46,136,0.45)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- 3D Extruded Dark Plum/Crimson Side & Bottom Bevel -->
+      <path d="M5 8H11V10H13V12H19V10H21V8H27V11H29V18H27V21H24V24H21V27H18V30H14V27H11V24H8V21H5V18H3V11H5V8Z" fill="#520829"/>
+      <!-- Main Blocky Heart Face -->
+      <path d="M5 6H11V8H13V10H19V8H21V6H27V9H29V16H27V19H24V22H21V25H18V28H14V25H11V22H8V19H5V16H3V9H5V6Z" fill="url(#mhHeartMainGrad)"/>
+      <!-- Silver-White Top-Left Pixel Highlight Bevel -->
+      <path d="M6 7H10V9H12V11H8V9H6V7Z" fill="#f8fafc" fill-opacity="0.9"/>
+      <path d="M4 10H6V15H4V10Z" fill="#ffd1e6" fill-opacity="0.75"/>
+      <!-- Silver-White Specular Glint -->
+      <rect x="8" y="11" width="3" height="2" fill="#f8fafc" fill-opacity="0.8"/>
+      <defs>
+        <linearGradient id="mhHeartMainGrad" x1="3" y1="6" x2="29" y2="28" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#ff7ab8"/>
+          <stop offset="52%" stop-color="#ff2e88"/>
+          <stop offset="100%" stop-color="#b81058"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </template>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-[#140f1d]/90 backdrop-blur-md border-b border-[#35274e]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+
+      <!-- Left: 3D Heart Emblem + MINEHEART Logo -->
+      <div class="flex items-center gap-6">
+        <button onclick="navigate('home')" class="flex items-center gap-2.5 group focus:outline-none">
+          <div id="nav-heart-slot" class="w-9 h-9 shrink-0 group-hover:scale-105 transition-transform"></div>
+          <span class="text-xs sm:text-sm font-bold tracking-tight flex items-center">
+            <span class="mh-logo-mine" id="nav-brand-left">MINE</span><span class="mh-logo-heart" id="nav-brand-right">HEART</span>
+          </span>
+        </button>
+
+        <!-- Center Navigation Links (Desktop) -->
+        <nav class="hidden lg:flex items-center gap-1">
+          <button onclick="navigate('home')" data-nav="home" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-[#f8fafc] bg-[#1e162c] border border-[#35274e] flex items-center gap-2 transition">
+            <svg class="w-4 h-4 text-[#ff4da6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            Home
+          </button>
+          <button onclick="navigate('rankings')" data-nav="rankings" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-purple-200/70 hover:text-[#f8fafc] hover:bg-[#1e162c]/70 flex items-center gap-2 transition">
+            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            Rankings
+          </button>
+
+          <!-- Social Dropdown (Discord & YouTube) -->
+          <div class="relative group">
+            <button class="px-3 py-2 rounded-lg text-sm font-medium text-purple-200/70 hover:text-[#f8fafc] hover:bg-[#1e162c]/70 flex items-center gap-2 transition">
+              <svg class="w-4 h-4 text-[#ff4da6]" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
+              Socials
+              <svg class="w-3.5 h-3.5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150 absolute left-0 top-full pt-1.5 w-52 z-50">
+              <div class="bg-[#1e162c] border border-[#35274e] rounded-xl p-1.5 shadow-2xl space-y-1">
+                <a id="nav-discord-link" href="https://discord.gg/sW45Anq3RD" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-[#f8fafc] hover:bg-[#281d3b] transition">
+                  <span class="w-2 h-2 rounded-full bg-[#ff4da6]"></span>
+                  MineHeart Discord
+                </a>
+                <a id="nav-youtube-link" href="https://www.youtube.com/@MineheartTiers" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold text-[#f8fafc] hover:bg-[#281d3b] transition">
+                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                  YouTube (@MineheartTiers)
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="navigate('server-ip')" data-nav="server-ip" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-purple-200/70 hover:text-[#f8fafc] hover:bg-[#1e162c]/70 flex items-center gap-2 transition">
+            <svg class="w-4 h-4 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+            Server IP
+          </button>
+          <button onclick="navigate('events')" data-nav="events" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-purple-200/70 hover:text-[#f8fafc] hover:bg-[#1e162c]/70 flex items-center gap-2 transition">
+            <svg class="w-4 h-4 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            Events
+          </button>
+        </nav>
+      </div>
+
+      <!-- Right: Direct Social Icons, Region Filter & Search Bar (No public admin clutter) -->
+      <div class="flex items-center gap-2">
+        <a id="header-discord-quick" href="https://discord.gg/sW45Anq3RD" target="_blank" rel="noopener noreferrer" title="MineHeart Discord" class="w-9 h-9 rounded-lg bg-[#1e162c] hover:bg-[#281d3b] border border-[#35274e] text-[#ff4da6] flex items-center justify-center transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
+        </a>
+
+        <a id="header-youtube-quick" href="https://www.youtube.com/@MineheartTiers" target="_blank" rel="noopener noreferrer" title="MineHeart YouTube (@MineheartTiers)" class="w-9 h-9 rounded-lg bg-[#1e162c] hover:bg-[#281d3b] border border-[#35274e] text-rose-400 hover:text-rose-300 flex items-center justify-center transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+
+        <select id="global-region-filter" onchange="handleRegionChange(this.value)" class="bg-[#1e162c] border border-[#35274e] text-xs sm:text-sm text-[#f8fafc] rounded-lg px-2.5 py-2 focus:outline-none focus:border-[#ff2e88] cursor-pointer">
+          <option value="ALL">🌍 All</option>
+          <option value="NA">🇺🇸 NA</option>
+          <option value="EU">🇪🇺 EU</option>
+          <option value="AS">🌏 AS</option>
+          <option value="SA">🇧🇷 SA</option>
+          <option value="AU">🇦🇺 AU</option>
+        </select>
+
+        <div class="relative hidden sm:block">
+          <svg class="w-4 h-4 text-purple-200/60 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input id="global-search-input" type="text" oninput="handleSearchInput(this.value)" placeholder="Search player..." class="w-36 md:w-48 bg-[#1e162c] border border-[#35274e] rounded-lg pl-9 pr-7 py-1.5 text-sm text-[#f8fafc] placeholder-purple-200/40 focus:outline-none focus:border-[#ff2e88] transition" />
+          <kbd class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-purple-200/60 bg-[#140f1d] px-1.5 py-0.5 rounded border border-[#35274e]">/</kbd>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Strip -->
+    <div class="flex lg:hidden items-center justify-between px-4 py-2 border-t border-[#35274e] bg-[#140f1d] overflow-x-auto gap-2">
+      <button onclick="navigate('home')" class="text-xs font-medium text-[#f8fafc] px-2.5 py-1 rounded bg-[#1e162c] border border-[#35274e]">Home</button>
+      <button onclick="navigate('rankings')" class="text-xs font-medium text-[#f8fafc] px-2.5 py-1 rounded bg-[#1e162c] border border-[#35274e]">Rankings</button>
+      <button onclick="navigate('server-ip')" class="text-xs font-medium text-[#f8fafc] px-2.5 py-1 rounded bg-[#1e162c] border border-[#35274e]">Server IP</button>
+      <button onclick="navigate('events')" class="text-xs font-medium text-[#f8fafc] px-2.5 py-1 rounded bg-[#1e162c] border border-[#35274e]">Events</button>
+      <a id="mobile-discord-link" href="https://discord.gg/sW45Anq3RD" target="_blank" class="text-xs font-semibold text-[#ff4da6] px-2.5 py-1 rounded bg-[#1e162c] border border-[#35274e]">Discord</a>
+      <a id="mobile-youtube-link" href="https://www.youtube.com/@MineheartTiers" target="_blank" class="text-xs font-semibold text-rose-400 px-2.5 py-1 rounded bg-[#1e162c] border border-[#35274e]">YouTube</a>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ==================== VIEW 1: HOMEPAGE ==================== -->
+    <section id="view-home" class="space-y-12">
+
+      <!-- Hero Split Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#1e162c]/90 border border-[#35274e] rounded-2xl p-6 sm:p-10 relative overflow-hidden shadow-2xl">
+        <!-- Ambient Hot Pink & Plum Glows -->
+        <div class="absolute -top-24 -left-24 w-72 h-72 bg-[#ff2e88]/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 right-10 w-80 h-80 bg-purple-700/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <!-- Left Column -->
+        <div class="lg:col-span-5 space-y-6 relative z-10">
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#281d3b] border border-[#35274e] text-[#f8fafc] text-xs font-semibold">
+              <span class="w-2 h-2 rounded-full bg-[#ff2e88] animate-pulse"></span>
+              <span id="hero-member-badge">1k</span> Members
+            </div>
+            <a id="hero-yt-pill" href="https://www.youtube.com/@MineheartTiers" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/35 text-rose-300 text-xs font-semibold transition">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              @MineheartTiers
+            </a>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex items-center gap-3.5">
+              <div id="hero-heart-slot" class="w-12 h-12 sm:w-14 sm:h-14 shrink-0"></div>
+              <h1 class="text-2xl sm:text-3xl xl:text-4xl font-black tracking-tight leading-none flex items-center">
+                <span class="mh-logo-mine" id="hero-brand-left">MINE</span><span class="mh-logo-heart" id="hero-brand-right">HEART</span>
+              </h1>
+            </div>
+            <h2 id="hero-subtitle" class="text-2xl sm:text-3xl font-extrabold text-[#f8fafc] tracking-tight">
+              Official MH Tierlist
+            </h2>
+          </div>
+
+          <p id="hero-description" class="text-purple-100/75 text-sm sm:text-base leading-relaxed">
+            Official MH Tierlist ranks players across 8 gamemodes from Tier 1 to Tier 5 on one overall leaderboard.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button onclick="navigate('rankings')" class="px-5 py-3 rounded-xl bg-gradient-to-r from-[#ff2e88] to-[#ff4da6] hover:brightness-110 text-white font-bold text-sm flex items-center gap-2 shadow-lg shadow-[#ff2e88]/30 transition transform hover:-translate-y-0.5">
+              View rankings
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+            <button onclick="scrollToTesting()" class="px-5 py-3 rounded-xl bg-[#281d3b] hover:bg-[#33254b] text-[#f8fafc] font-semibold text-sm border border-[#35274e] transition">
+              Get tier tested
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Top Players Widget -->
+        <div class="lg:col-span-7 space-y-3 relative z-10">
+          <div class="flex items-center justify-between px-1">
+            <div class="flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-[#f8fafc]">
+              <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              TOP PLAYERS
+            </div>
+            <button onclick="navigate('rankings')" class="text-xs font-semibold text-purple-200/75 hover:text-[#ff4da6] flex items-center gap-1 transition">
+              Full leaderboard
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <div id="top-players-container" class="space-y-3">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Gamemodes Grid Section -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-bold text-[#f8fafc] tracking-tight">Gamemodes</h3>
+          <span class="text-xs text-purple-200/65">Select a gamemode to view Tier 1 – Tier 5</span>
+        </div>
+        <div id="gamemodes-grid" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- Server IP Live Status Strip -->
+      <div class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-5 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-5">
+        <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+          <div id="strip-heart-slot" class="w-12 h-12 shrink-0"></div>
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-widest text-purple-200/70 mb-1">SERVER IP</div>
+            <button onclick="copyServerIP()" class="px-4 py-2 rounded-xl bg-[#281d3b] hover:bg-[#33254b] border border-[#35274e] text-[#f8fafc] font-bold text-sm sm:text-base flex items-center gap-2.5 transition">
+              <span id="strip-server-ip">play.mineheart.net</span>
+              <svg class="w-4 h-4 text-[#ff4da6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 sm:gap-10">
+          <div>
+            <div class="flex items-center gap-2 font-bold text-[#f8fafc] text-sm">
+              <span id="strip-status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+              <span id="strip-status-label">Online</span>
+            </div>
+            <div class="text-xs text-purple-200/70 mt-0.5"><span id="strip-member-count">1k</span> members • <span id="strip-online-players">1,000 / 10,000</span></div>
+          </div>
+          <div class="hidden sm:block text-xs text-purple-200/70 font-medium">
+            Java 1.21 - 26.3 · Bedrock 19132
+          </div>
+        </div>
+
+        <button onclick="navigate('server-ip')" class="text-xs sm:text-sm font-semibold text-purple-200/80 hover:text-[#ff4da6] flex items-center gap-1.5 transition">
+          Server IP
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+      </div>
+
+      <!-- Get Tier Tested 5-Step Banner -->
+      <div id="get-tier-tested-section" class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-5 space-y-5">
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-[#f8fafc] tracking-tight">Get tier tested</h3>
+          <p class="text-purple-100/75 text-sm sm:text-base leading-relaxed">
+            Tier tests happen in-game on <span id="testing-ip-inline" class="text-[#f8fafc] font-semibold">play.mineheart.net</span> and via our <span class="member-count-sync text-[#ff4da6] font-semibold">1k</span>-member community. Queue for a gamemode, fight a tester, and get your tier.
+          </p>
+          <div class="flex flex-wrap items-center gap-2.5 pt-1">
+            <button onclick="copyServerIP()" class="px-4 py-2.5 rounded-xl bg-[#281d3b] hover:bg-[#33254b] border border-[#35274e] text-[#f8fafc] font-semibold text-xs sm:text-sm flex items-center gap-2 transition">
+              <span id="testing-ip-btn">play.mineheart.net</span>
+              <svg class="w-4 h-4 text-[#ff4da6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </button>
+            <a id="testing-discord-btn" href="https://discord.gg/sW45Anq3RD" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#ff2e88] to-[#ff4da6] hover:brightness-110 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-[#ff2e88]/25 transition">
+              Join Discord
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </a>
+            <a id="testing-youtube-btn" href="https://www.youtube.com/@MineheartTiers" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-[#281d3b] hover:bg-rose-500/20 border border-[#35274e] hover:border-rose-500/40 text-rose-300 font-semibold text-xs sm:text-sm flex items-center gap-2 transition">
+              YouTube
+            </a>
+          </div>
+        </div>
+
+        <!-- Right 5-Step Timeline -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-[#281d3b] border border-[#35274e] text-[#f8fafc] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</div>
+            <p class="text-sm text-purple-100/85 pt-1">Join <strong class="text-[#f8fafc]" id="step-ip-text">play.mineheart.net</strong> on Java (1.21 - 26.3) or Bedrock.</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-[#281d3b] border border-[#35274e] text-[#f8fafc] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</div>
+            <p class="text-sm text-purple-100/85 pt-1">Type <code class="px-1.5 py-0.5 rounded bg-[#140f1d] text-[#ff4da6] font-mono text-xs border border-[#35274e]">/tiertest</code> and choose the gamemode you want to be tested in, or join <a id="step-discord-link" href="https://discord.gg/sW45Anq3RD" target="_blank" class="text-[#ff4da6] hover:underline font-medium">MineHeart Discord</a>.</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-[#281d3b] border border-[#35274e] text-[#f8fafc] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</div>
+            <p class="text-sm text-purple-100/85 pt-1">Pick your region to join that gamemode's testing queue.</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-[#281d3b] border border-[#35274e] text-[#f8fafc] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">4</div>
+            <p class="text-sm text-purple-100/85 pt-1">When a tester in your region is free, you're moved to a private arena with the official kit.</p>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-[#ff2e88]/20 border-2 border-[#ff4da6] text-[#ff4da6] font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-[#ff2e88]/25">5</div>
+            <p class="text-sm text-[#f8fafc] font-medium pt-1">Fight your tester. Your new tier is added to your MineHeart profile after the test.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Frequently Asked Questions (01–09) -->
+      <div id="faq-section" class="space-y-5">
+        <div>
+          <h3 class="text-2xl font-extrabold text-[#f8fafc] tracking-tight">Frequently asked questions</h3>
+          <p class="text-xs sm:text-sm text-purple-200/70 mt-1">Quick answers about tiers, tier tests, points and the MineHeart server.</p>
+        </div>
+        <div id="faq-accordion-list" class="space-y-2.5">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- "Still have questions?" Guides Banner -->
+      <div class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-5 flex items-start gap-4">
+          <div id="guide-heart-slot" class="w-12 h-12 shrink-0 mt-1"></div>
+          <div class="space-y-3">
+            <h3 class="text-xl font-extrabold text-[#f8fafc]">Still have questions?</h3>
+            <p class="text-xs sm:text-sm text-purple-100/75 leading-relaxed">
+              The guides explain tier tests, tiers, points and titles step by step.
+            </p>
+            <button onclick="navigate('guides')" class="px-4 py-2.5 rounded-xl bg-[#281d3b] hover:bg-[#33254b] border border-[#35274e] text-[#f8fafc] text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition">
+              Read the guides
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 divide-y divide-[#35274e]">
+          <button onclick="openGuideArticle('tier-tested')" class="w-full py-4 flex items-center justify-between text-left group">
+            <span class="text-sm font-semibold text-[#f8fafc] group-hover:text-[#ff4da6] transition">How to Get Tier Tested on MineHeart</span>
+            <svg class="w-4 h-4 text-purple-200/60 group-hover:text-[#ff4da6] group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+          <button onclick="openGuideArticle('tiers-explained')" class="w-full py-4 flex items-center justify-between text-left group">
+            <span class="text-sm font-semibold text-[#f8fafc] group-hover:text-[#ff4da6] transition">Minecraft PvP Tiers Explained: What HT1 to LT5 Mean</span>
+            <svg class="w-4 h-4 text-purple-200/60 group-hover:text-[#ff4da6] group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+          <button onclick="openGuideArticle('points-titles')" class="w-full py-4 flex items-center justify-between text-left group">
+            <span class="text-sm font-semibold text-[#f8fafc] group-hover:text-[#ff4da6] transition">MineHeart Points and Titles: How the Overall Ranking Works</span>
+            <svg class="w-4 h-4 text-purple-200/60 group-hover:text-[#ff4da6] group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 2: RANKINGS ==================== -->
+    <section id="view-rankings" class="hidden space-y-0">
+
+      <!-- Folder-style Gamemode Selector Tabs -->
+      <div id="rankings-mode-tabs" class="flex items-center gap-1 overflow-x-auto px-1">
+        <!-- Populated via JS -->
+      </div>
+
+      <!-- Main Rankings Card Container -->
+      <div class="bg-[#1e162c] border border-[#35274e] rounded-2xl rounded-tl-none p-5 sm:p-6 space-y-6">
+
+        <!-- Rankings Sub-Header -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <h2 id="rankings-heading-title" class="text-2xl sm:text-3xl font-extrabold text-[#f8fafc] tracking-tight">Overall Minecraft PvP Rankings</h2>
+            <p id="rankings-heading-subtitle" class="text-xs sm:text-sm text-purple-200/70 mt-1">Players ranked by points across 8 gamemodes</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="openInfoModal()" class="px-3.5 py-2 rounded-xl bg-[#281d3b] hover:bg-[#33254b] border border-[#35274e] text-[#f8fafc] text-xs sm:text-sm font-semibold flex items-center gap-2 transition">
+              <span class="w-4 h-4 rounded-full bg-[#ff2e88] text-white font-black text-[10px] flex items-center justify-center">i</span>
+              Information
+            </button>
+
+            <div class="flex items-center gap-2.5 bg-[#140f1d] border border-[#35274e] rounded-xl px-3 py-1.5">
+              <div id="rankings-heart-slot" class="w-6 h-6 shrink-0"></div>
+              <div>
+                <div class="text-[9px] font-bold uppercase tracking-wider text-purple-200/65">SERVER IP</div>
+                <button onclick="copyServerIP()" class="text-xs font-bold text-[#f8fafc] hover:text-[#ff4da6] flex items-center gap-1.5 transition">
+                  <span id="rankings-box-ip">play.mineheart.net</span>
+                  <svg class="w-3.5 h-3.5 text-[#ff4da6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                </button>
+              </div>
+              <a id="rankings-discord-icon" href="https://discord.gg/sW45Anq3RD" target="_blank" class="w-8 h-8 rounded-lg bg-[#ff2e88] hover:bg-[#ff4da6] text-white flex items-center justify-center ml-1 transition" title="MineHeart Discord">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
+              </a>
+              <a id="rankings-youtube-icon" href="https://www.youtube.com/@MineheartTiers" target="_blank" class="w-8 h-8 rounded-lg bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center transition" title="MineHeart YouTube (@MineheartTiers)">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Search inside Rankings -->
+        <div class="sm:hidden">
+          <input type="text" oninput="handleSearchInput(this.value)" placeholder="Search player IGN..." class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-4 py-2.5 text-sm text-[#f8fafc] placeholder-purple-200/40 focus:outline-none focus:border-[#ff2e88]" />
+        </div>
+
+        <!-- Overall & LTMs Leaderboard Card-Row View -->
+        <div id="rankings-overall-container" class="space-y-2.5">
+          <div class="hidden md:grid grid-cols-12 px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-purple-200/55">
+            <div class="col-span-5 flex items-center gap-6">
+              <span>#</span>
+              <span>PLAYER</span>
+            </div>
+            <div class="col-span-2 text-center">REGION</div>
+            <div class="col-span-5 text-right pr-6">TIERS</div>
+          </div>
+          <div id="overall-leaderboard-body" class="space-y-2.5">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Specific Gamemode 5-Column Tier View -->
+        <div id="rankings-tiers-container" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <!-- Tier 1 to Tier 5 Columns Populated via JS -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: SERVER IP PAGE ==================== -->
+    <section id="view-server-ip" class="hidden space-y-6">
+      <div class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7 space-y-5">
+          <div class="flex items-center gap-2.5 text-xs font-extrabold uppercase tracking-widest text-[#ff4da6]">
+            <span class="w-5 h-0.5 bg-[#ff4da6]"></span>
+            MINECRAFT SERVER
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-black text-[#f8fafc] tracking-tight">MineHeart Server IP</h2>
+          <p class="text-purple-100/75 text-sm sm:text-base leading-relaxed max-w-xl">
+            The MineHeart Minecraft server IP is <strong class="text-[#f8fafc]" id="serverpage-ip-inline">play.mineheart.net</strong>. Java players can join on any version from <strong class="text-[#f8fafc]">1.21 - 26.3</strong>, and Bedrock players can join on port <strong class="text-[#f8fafc]">19132</strong>.
+          </p>
+          <div class="pt-1">
+            <button onclick="copyServerIP()" class="px-5 py-3 rounded-xl bg-[#281d3b] hover:bg-[#33254b] border border-[#35274e] text-[#f8fafc] font-bold text-base flex items-center gap-3 shadow-lg transition">
+              <span id="serverpage-ip-btn">play.mineheart.net</span>
+              <svg class="w-4 h-4 text-[#ff4da6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="bg-[#140f1d] border border-[#35274e] rounded-2xl p-6 flex items-center gap-5">
+            <div id="serverpage-heart-slot" class="w-16 h-16 shrink-0"></div>
+            <div class="space-y-1">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-purple-200/65">SERVER STATUS</div>
+              <div class="flex items-center gap-2 text-lg font-extrabold text-[#f8fafc]">
+                <span id="serverpage-status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]"></span>
+                <span id="serverpage-status-label">Online</span>
+              </div>
+              <div class="text-xs text-purple-200/75"><span id="serverpage-online-count">1,000 / 10,000</span> players • <span class="member-count-sync">1k</span> members</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-5 space-y-2">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-purple-200/65">SERVER ADDRESS</div>
+          <div class="text-base font-extrabold text-[#f8fafc]" id="card-server-address">play.mineheart.net</div>
+          <p class="text-xs text-purple-200/70">Click the IP button above to copy directly to your clipboard.</p>
+        </div>
+        <div class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-5 space-y-2">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-purple-200/65">JAVA EDITION</div>
+          <div class="text-base font-extrabold text-[#f8fafc]">Versions 1.21 – 26.3</div>
+          <p class="text-xs text-purple-200/70">Optimized 1.9+ combat mechanics with low-latency regional proxies.</p>
+        </div>
+        <div class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-5 space-y-2">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-purple-200/65">BEDROCK EDITION</div>
+          <div class="text-base font-extrabold text-[#f8fafc]">Port 19132</div>
+          <p class="text-xs text-purple-200/70">Full cross-play support for mobile, console, and Windows Bedrock.</p>
+        </div>
+        <div class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-5 space-y-2">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-purple-200/65">TIER TESTS</div>
+          <div class="text-base font-extrabold text-[#f8fafc]">/tiertest Command</div>
+          <p class="text-xs text-purple-200/70">Queue in-game or join our <span class="member-count-sync">1k</span> Discord to fight verified testers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: EVENTS ==================== -->
+    <section id="view-events" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#f8fafc] tracking-tight">Tournaments & Events</h2>
+          <p class="text-sm text-purple-200/70 mt-1">Official MineHeart PvP cups, community tournaments, and tier-testing weekends.</p>
+        </div>
+        <div class="flex items-center gap-2.5">
+          <a id="events-discord-cta" href="https://discord.gg/sW45Anq3RD" target="_blank" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#ff2e88] to-[#ff4da6] hover:brightness-110 text-white text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition shadow-lg shadow-[#ff2e88]/25">
+            Register on Discord
+          </a>
+          <a id="events-youtube-cta" href="https://www.youtube.com/@MineheartTiers" target="_blank" class="px-4 py-2.5 rounded-xl bg-[#1e162c] hover:bg-rose-500/20 border border-[#35274e] hover:border-rose-500/40 text-rose-300 text-xs sm:text-sm font-semibold inline-flex items-center gap-2 transition">
+            Watch Streams
+          </a>
+        </div>
+      </div>
+
+      <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 5: GUIDES ==================== -->
+    <section id="view-guides" class="hidden space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-[#f8fafc] tracking-tight">MineHeart PvP Guides</h2>
+          <p class="text-sm text-purple-200/70 mt-1">Everything you need to know about tier testing, points, and climbing the leaderboard.</p>
+        </div>
+        <button onclick="navigate('home')" class="px-4 py-2 rounded-xl bg-[#1e162c] border border-[#35274e] text-xs font-semibold text-[#f8fafc] hover:border-[#ff2e88] transition">
+          ← Back Home
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div id="guide-card-tier-tested" class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-3 transition">
+          <span class="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-xs font-bold">Guide 01</span>
+          <h3 class="text-lg font-extrabold text-[#f8fafc]">How to Get Tier Tested on MineHeart</h3>
+          <p class="text-xs sm:text-sm text-purple-100/75 leading-relaxed">
+            Connect to <strong class="text-[#f8fafc]" id="guide-ip-text">play.mineheart.net</strong> and join our <span class="member-count-sync text-[#ff4da6] font-semibold">1k</span>-member Discord server. Use <code class="text-[#ff4da6]">/tiertest</code> in the lobby to select your gamemode and region. Once matched with a tester, you duel in a standardized arena kit to earn your placement (Tier 5 up to Tier 1).
+          </p>
+        </div>
+
+        <div id="guide-card-tiers-explained" class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-3 transition">
+          <span class="px-2.5 py-1 rounded-lg bg-[#ff2e88]/15 text-[#ff7ab8] text-xs font-bold">Guide 02</span>
+          <h3 class="text-lg font-extrabold text-[#f8fafc]">Minecraft PvP Tiers Explained: What HT1 to LT5 Mean</h3>
+          <p class="text-xs sm:text-sm text-purple-100/75 leading-relaxed">
+            Every gamemode uses 5 main tiers (Tier 1 being the highest, Tier 5 being entry competitive). Each tier is split into <strong class="text-amber-300">High Tier (HT)</strong> and <strong class="text-[#ff7ab8]">Low Tier (LT)</strong> subdivisions, with <strong class="text-[#f8fafc]">R-</strong> indicating a retired legacy tier.
+          </p>
+        </div>
+
+        <div id="guide-card-points-titles" class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-3 transition">
+          <span class="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-200 text-xs font-bold">Guide 03</span>
+          <h3 class="text-lg font-extrabold text-[#f8fafc]">MineHeart Points and Titles: How Overall Works</h3>
+          <p class="text-xs sm:text-sm text-purple-100/75 leading-relaxed">
+            Your Overall score sums your points across all 8 gamemodes based on the active point weights configured in the Admin Panel. Reaching higher totals unlocks titles like <em>Combat Ace</em>, <em>Combat Master</em>, and <em>Combat Grandmaster</em>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 6: HIDDEN STAFF & ADMINISTRATION DASHBOARD ==================== -->
+    <section id="view-admin" class="hidden space-y-6">
+
+      <!-- Staff Login Box -->
+      <div id="admin-login-box" class="max-w-md mx-auto bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 sm:p-8 space-y-6 my-8 shadow-2xl">
+        <div class="text-center space-y-2">
+          <div class="w-12 h-12 rounded-xl bg-[#ff2e88]/15 border border-[#ff2e88]/40 text-[#ff4da6] flex items-center justify-center mx-auto">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <h2 class="text-2xl font-extrabold text-[#f8fafc]">MineHeart Staff Portal</h2>
+          <p class="text-xs text-purple-200/70">Restricted administration access. Sign in with your staff credentials.</p>
+        </div>
+
+        <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-[#f8fafc] mb-1.5">Username</label>
+            <input id="login-username" type="text" required autocomplete="off" placeholder="Enter staff username" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-4 py-2.5 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-[#f8fafc] mb-1.5">Password</label>
+            <input id="login-password" type="password" required placeholder="••••••••••••" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-4 py-2.5 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+          </div>
+          <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#ff2e88] to-[#ff4da6] hover:brightness-110 text-white font-bold text-sm transition shadow-lg shadow-[#ff2e88]/25">
+            Sign In to Administration
+          </button>
+        </form>
+      </div>
+
+      <!-- Authenticated Administration Dashboard -->
+      <div id="admin-dashboard-box" class="hidden space-y-6">
+        <div class="bg-[#1e162c] border border-[#35274e] rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2.5">
+              <h2 class="text-xl sm:text-2xl font-extrabold text-[#f8fafc]">MineHeart Administration Panel</h2>
+              <span id="current-staff-role-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#ff2e88]/20 text-[#ff7ab8] border border-[#ff2e88]/40">Owner</span>
+            </div>
+            <p class="text-xs text-purple-200/70 mt-1">Signed in as <strong id="current-staff-name" class="text-[#f8fafc]">MineheartStaff</strong> • Saved automatically in localStorage.</p>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <button onclick="resetToDefaultData()" class="px-3.5 py-2 rounded-xl bg-[#281d3b] hover:bg-rose-500/20 text-[#f8fafc] hover:text-rose-200 border border-[#35274e] text-xs font-semibold transition">
+              Reset Default Data
+            </button>
+            <button onclick="handleAdminLogout()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition">
+              Logout
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Administration Tabs -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 border-b border-[#35274e]">
+          <button onclick="switchAdminTab('players')" data-admin-tab="players" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-sm font-semibold bg-[#1e162c] text-[#ff4da6] border-t border-x border-[#35274e]">
+            1. Players & Tiers
+          </button>
+          <button onclick="switchAdminTab('staff')" data-admin-tab="staff" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-sm font-semibold text-purple-200/70 hover:text-[#f8fafc]">
+            2. Staff & Admins
+          </button>
+          <button onclick="switchAdminTab('settings')" data-admin-tab="settings" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-sm font-semibold text-purple-200/70 hover:text-[#f8fafc]">
+            3. Site & Branding Settings
+          </button>
+          <button onclick="switchAdminTab('events-audit')" data-admin-tab="events-audit" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-sm font-semibold text-purple-200/70 hover:text-[#f8fafc]">
+            4. Events & Audit Log
+          </button>
+        </div>
+
+        <!-- TAB 1: PLAYERS & TIERS -->
+        <div id="admin-tab-players" class="admin-tab-content grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-5 bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-4 h-fit">
+            <div class="flex items-center justify-between">
+              <h3 id="player-form-title" class="text-lg font-bold text-[#f8fafc]">Add / Edit Player</h3>
+              <button type="button" onclick="clearPlayerForm()" class="text-xs text-purple-200/70 hover:text-[#f8fafc]">Clear</button>
+            </div>
+            <form onsubmit="handleSavePlayer(event)" class="space-y-4">
+              <input type="hidden" id="edit-player-id" value="" />
+              <div class="grid grid-cols-3 gap-3">
+                <div class="col-span-2">
+                  <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Minecraft IGN</label>
+                  <input id="player-ign-input" type="text" required placeholder="e.g. HeartBreaker" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Region</label>
+                  <select id="player-region-input" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]">
+                    <option value="NA">NA</option>
+                    <option value="EU">EU</option>
+                    <option value="AS">AS</option>
+                    <option value="SA">SA</option>
+                    <option value="AU">AU</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Custom Title Override (Optional)</label>
+                <input id="player-custom-title-input" type="text" placeholder="Leave blank for automatic Combat Title" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3 py-2 text-sm text-[#f8fafc] placeholder-purple-200/35 focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+
+              <div class="space-y-2.5 pt-1">
+                <label class="block text-xs font-semibold text-[#f8fafc]">Gamemode Tiers (HT1–LT5 or Unranked) & Retired Toggle</label>
+                <div id="admin-gamemode-tier-inputs" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+
+              <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#ff2e88] to-[#ff4da6] hover:brightness-110 text-white font-bold text-sm transition">
+                Save Player & Recalculate Ranks
+              </button>
+            </form>
+          </div>
+
+          <div class="lg:col-span-7 bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="text-lg font-bold text-[#f8fafc]">Ranked Players (<span id="admin-player-count">0</span>)</h3>
+              <input id="admin-player-filter-input" type="text" oninput="renderAdminPlayersList(this.value)" placeholder="Filter by IGN..." class="bg-[#140f1d] border border-[#35274e] rounded-lg px-3 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+            </div>
+            <div id="admin-players-list" class="space-y-2.5 max-h-[620px] overflow-y-auto pr-1">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: STAFF & ADMINS -->
+        <div id="admin-tab-staff" class="admin-tab-content hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-5 bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-4 h-fit">
+            <h3 class="text-lg font-bold text-[#f8fafc]">Add Staff / Admin / Tester</h3>
+            <p class="text-xs text-purple-200/70">Grant staff accounts access to test players, manage events, or customize the site.</p>
+            <form onsubmit="handleAddStaff(event)" class="space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Staff Username</label>
+                <input id="new-staff-username" type="text" required placeholder="e.g. MH_Admin" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Discord Tag (Optional)</label>
+                <input id="new-staff-discord" type="text" placeholder="e.g. heart_tester" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Password</label>
+                <input id="new-staff-password" type="text" required placeholder="Create password" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Role</label>
+                <select id="new-staff-role" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]">
+                  <option value="Admin">Admin</option>
+                  <option value="Tier Tester">Tier Tester</option>
+                  <option value="Owner">Owner</option>
+                </select>
+              </div>
+              <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#140f1d] font-bold text-sm transition">
+                + Grant Staff Access
+              </button>
+            </form>
+          </div>
+
+          <div class="lg:col-span-7 bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-4">
+            <h3 class="text-lg font-bold text-[#f8fafc]">Authorized Staff Roster</h3>
+            <div id="admin-staff-list" class="space-y-2.5">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: SITE & BRANDING SETTINGS -->
+        <div id="admin-tab-settings" class="admin-tab-content hidden bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-6">
+          <h3 class="text-lg font-bold text-[#f8fafc]">Site, Social Links, Server Status & Point Weights</h3>
+          <form onsubmit="handleSaveSettings(event)" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Logo Prefix (Silver-White)</label>
+                <input id="setting-brand-left" type="text" required class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Logo Suffix (Hot Pink)</label>
+                <input id="setting-brand-right" type="text" required class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Hero Subtitle</label>
+                <input id="setting-hero-subtitle" type="text" required class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Member Count Stat</label>
+                <input id="setting-member-count" type="text" required class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Server IP</label>
+                <input id="setting-server-ip" type="text" required class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Online Players Display</label>
+                <input id="setting-online-players" type="text" required class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Discord Invite URL</label>
+                <input id="setting-discord-url" type="url" required class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">YouTube Channel URL</label>
+                <input id="setting-youtube-url" type="url" required class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+              <div class="md:col-span-3">
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Hero Description</label>
+                <textarea id="setting-hero-desc" rows="2" required class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Server Status</label>
+                <select id="setting-server-online" class="w-full bg-[#140f1d] border border-[#35274e] rounded-xl px-3.5 py-2.5 text-sm text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]">
+                  <option value="true">Online</option>
+                  <option value="false">Maintenance / Offline</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Customizable Point Weights HT1 - LT5 -->
+            <div class="space-y-2.5 pt-2 border-t border-[#35274e]">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-purple-200/75">Tier Point Weights (HT1 – LT5)</h4>
+              <div id="admin-point-weights-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+
+            <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#ff2e88] to-[#ff4da6] hover:brightness-110 text-white font-bold text-sm transition">
+              Save All Settings
+            </button>
+          </form>
+        </div>
+
+        <!-- TAB 4: EVENTS & AUDIT LOG -->
+        <div id="admin-tab-events-audit" class="admin-tab-content hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-6 bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-5">
+            <h3 class="text-lg font-bold text-[#f8fafc]">Events Manager</h3>
+            <form onsubmit="handleSaveEvent(event)" class="space-y-3 bg-[#140f1d] border border-[#35274e] rounded-xl p-4">
+              <input type="hidden" id="edit-event-id" value="" />
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Event Title</label>
+                  <input id="event-title-input" type="text" required placeholder="MineHeart 1k Cup" class="w-full bg-[#1e162c] border border-[#35274e] rounded-lg px-3 py-2 text-xs text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Gamemode</label>
+                  <select id="event-mode-input" class="w-full bg-[#1e162c] border border-[#35274e] rounded-lg px-3 py-2 text-xs text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]">
+                    <option value="Vanilla">Vanilla</option>
+                    <option value="UHC">UHC</option>
+                    <option value="Pot">Pot</option>
+                    <option value="NethOP">NethOP</option>
+                    <option value="SMP">SMP</option>
+                    <option value="Sword">Sword</option>
+                    <option value="Axe">Axe</option>
+                    <option value="Mace">Mace</option>
+                  </select>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Prize</label>
+                  <input id="event-prize-input" type="text" required placeholder="$200 + Heart Badge" class="w-full bg-[#1e162c] border border-[#35274e] rounded-lg px-3 py-2 text-xs text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-[#f8fafc] mb-1">Date & Info</label>
+                  <input id="event-date-input" type="text" required placeholder="Saturday • 19:00 UTC" class="w-full bg-[#1e162c] border border-[#35274e] rounded-lg px-3 py-2 text-xs text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+                </div>
+              </div>
+              <div class="flex items-center gap-2 pt-1">
+                <button type="submit" class="px-4 py-2 rounded-lg bg-[#ff2e88] hover:bg-[#ff4da6] text-white font-bold text-xs transition">Save Event</button>
+                <button type="button" onclick="clearEventForm()" class="px-3 py-2 rounded-lg bg-[#281d3b] text-purple-200/75 text-xs font-semibold">Reset</button>
+              </div>
+            </form>
+
+            <div id="admin-events-list" class="space-y-2.5 max-h-[340px] overflow-y-auto">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 bg-[#1e162c] border border-[#35274e] rounded-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-bold text-[#f8fafc]">Live Audit Log</h3>
+              <button onclick="clearAuditLog()" class="text-xs text-purple-200/70 hover:text-rose-300">Clear Log</button>
+            </div>
+            <div id="admin-audit-list" class="space-y-2 max-h-[470px] overflow-y-auto text-xs">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Player Profile Modal -->
+  <div id="player-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm" onclick="closePlayerModal(event)">
+    <div class="bg-[#1e162c] border border-[#4e3973] rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl space-y-6" onclick="event.stopPropagation()">
+      <button onclick="closePlayerModal()" class="absolute top-5 right-5 w-8 h-8 rounded-lg bg-[#281d3b] hover:bg-[#35274e] text-[#f8fafc] flex items-center justify-center transition">✕</button>
+      <div id="player-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Rankings Information Modal -->
+  <div id="info-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-sm" onclick="closeInfoModal(event)">
+    <div class="bg-[#1e162c] border border-[#4e3973] rounded-2xl max-w-lg w-full p-6 sm:p-7 relative shadow-2xl space-y-5" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between border-b border-[#35274e] pb-3">
+        <h3 class="text-lg font-extrabold text-[#f8fafc]">How MineHeart Rankings Work</h3>
+        <button onclick="closeInfoModal()" class="w-8 h-8 rounded-lg bg-[#281d3b] hover:bg-[#35274e] text-[#f8fafc] flex items-center justify-center transition">✕</button>
+      </div>
+      <div class="space-y-4 text-xs sm:text-sm text-purple-100/85">
+        <div>
+          <h4 class="font-bold text-[#f8fafc] mb-1.5">Active Tier Point Values</h4>
+          <div id="info-points-grid" class="grid grid-cols-2 gap-2 text-xs">
+            <!-- Populated dynamically from appState.pointWeights -->
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold text-[#f8fafc] mb-1">Combat Titles</h4>
+          <p class="text-xs text-purple-200/75">
+            <strong class="text-amber-400">Combat Grandmaster:</strong> 400+ pts &nbsp;•&nbsp;
+            <strong class="text-[#ff7ab8]">Combat Master:</strong> 250+ pts &nbsp;•&nbsp;
+            <strong class="text-rose-400">Combat Ace:</strong> 150+ pts &nbsp;•&nbsp;
+            <strong class="text-[#f8fafc]">Combat Specialist:</strong> 75+ pts
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multi-Column Footer -->
+  <footer class="border-t border-[#35274e] bg-[#0e0a15] pt-12 pb-8 mt-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+
+        <div class="md:col-span-5 space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div id="footer-heart-slot" class="w-8 h-8 shrink-0"></div>
+            <div class="text-base font-black tracking-tight flex items-center">
+              <span class="mh-logo-mine" id="footer-brand-left">MINE</span><span class="mh-logo-heart" id="footer-brand-right">HEART</span>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-purple-200/70 leading-relaxed max-w-sm">
+            Official MH Tierlist — Minecraft PvP rankings, tier tests and events for <span class="member-count-sync text-[#ff4da6] font-semibold">1k</span> members.
+          </p>
+          <div class="flex flex-wrap items-center gap-2.5 pt-1">
+            <button onclick="copyServerIP()" class="px-4 py-2.5 rounded-xl bg-[#1e162c] hover:bg-[#281d3b] border border-[#35274e] text-[#f8fafc] font-bold text-xs sm:text-sm inline-flex items-center gap-2.5 transition">
+              <span id="footer-server-ip">play.mineheart.net</span>
+              <svg class="w-4 h-4 text-[#ff4da6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </button>
+            <a id="footer-discord-link" href="https://discord.gg/sW45Anq3RD" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 rounded-xl bg-[#1e162c] hover:bg-[#281d3b] border border-[#35274e] text-[#ff4da6] font-semibold text-xs sm:text-sm inline-flex items-center gap-2 transition">
+              Discord
+            </a>
+            <a id="footer-youtube-link" href="https://www.youtube.com/@MineheartTiers" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 rounded-xl bg-[#1e162c] hover:bg-[#281d3b] border border-[#35274e] text-rose-400 font-semibold text-xs sm:text-sm inline-flex items-center gap-2 transition">
+              YouTube
+            </a>
+          </div>
+          <div class="text-[11px] text-purple-200/50">Java 1.21 - 26.3 · Bedrock 19132</div>
+        </div>
+
+        <div class="md:col-span-5 space-y-3">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-purple-200/60">RANKINGS</div>
+          <div class="grid grid-cols-2 gap-x-6 gap-y-2.5 text-xs sm:text-sm">
+            <button onclick="openGamemodeRankings('overall')" class="flex items-center gap-2 text-purple-100/80 hover:text-[#ff4da6] text-left transition">
+              <span class="text-amber-400">🏆</span> Overall
+            </button>
+            <button onclick="openGamemodeRankings('vanilla')" class="flex items-center gap-2 text-purple-100/80 hover:text-[#ff4da6] text-left transition">
+              <span class="text-[#ff4da6]">◆</span> Vanilla
+            </button>
+            <button onclick="openGamemodeRankings('uhc')" class="flex items-center gap-2 text-purple-100/80 hover:text-[#ff4da6] text-left transition">
+              <span class="text-rose-400">♥</span> UHC
+            </button>
+            <button onclick="openGamemodeRankings('pot')" class="flex items-center gap-2 text-purple-100/80 hover:text-[#ff4da6] text-left transition">
+              <span class="text-[#ff7ab8]">🧪</span> Pot
+            </button>
+            <button onclick="openGamemodeRankings('nethop')" class="flex items-center gap-2 text-purple-100/80 hover:text-[#ff4da6] text-left transition">
+              <span class="text-purple-300">🪖</span> NethOP
+            </button>
+            <button onclick="openGamemodeRankings('smp')" class="flex items-center gap-2 text-purple-100/80 hover:text-[#ff4da6] text-left transition">
+              <span class="text-emerald-400">●</span> SMP
+            </button>
+            <button onclick="openGamemodeRankings('sword')" class="flex items-center gap-2 text-purple-100/80 hover:text-[#ff4da6] text-left transition">
+              <span class="text-sky-300">🗡️</span> Sword
+            </button>
+            <button onclick="openGamemodeRankings('axe')" class="flex items-center gap-2 text-purple-100/80 hover:text-[#ff4da6] text-left transition">
+              <span class="text-indigo-300">🪓</span> Axe
+            </button>
+            <button onclick="openGamemodeRankings('mace')" class="flex items-center gap-2 text-purple-100/80 hover:text-[#ff4da6] text-left transition">
+              <span class="text-[#f8fafc]">🔨</span> Mace
+            </button>
+          </div>
+        </div>
+
+        <div class="md:col-span-2 space-y-3">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-purple-200/60">EXPLORE</div>
+          <div class="flex flex-col space-y-2.5 text-xs sm:text-sm">
+            <button onclick="navigate('server-ip')" class="text-purple-100/80 hover:text-[#ff4da6] text-left transition">Server IP</button>
+            <button onclick="navigate('events')" class="text-purple-100/80 hover:text-[#ff4da6] text-left transition">Events</button>
+            <button onclick="navigate('guides')" class="text-purple-100/80 hover:text-[#ff4da6] text-left transition">Guides</button>
+            <button onclick="navigate('home'); setTimeout(() => document.getElementById('faq-section')?.scrollIntoView({behavior:'smooth'}), 100);" class="text-purple-100/80 hover:text-[#ff4da6] text-left transition">FAQ</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-6 border-t border-[#35274e] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-purple-200/50">
+        <div>
+          <span onclick="handleSecretCopyrightClick()" class="cursor-default select-none">©</span> 2026 <span id="footer-brand-name">MINEHEART</span>. All rights reserved.
+        </div>
+        <div>
+          Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ==================== CONSTANTS & DEFAULT DATA ====================
+    const STORAGE_KEY = 'mineheart_official_mh_tierlist_v4';
+
+    const GAMEMODES = [
+      { id: 'vanilla', name: 'Vanilla', color: '#ff4da6', icon: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4 9l8 13 8-13-8-7zm0 3.2L16.8 9 12 17.5 7.2 9 12 5.2z"/></svg>` },
+      { id: 'uhc', name: 'UHC', color: '#fb7185', icon: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>` },
+      { id: 'pot', name: 'Pot', color: '#ff7ab8', icon: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M9 3v2h1v2.17A7.002 7.002 0 005 14a7 7 0 0014 0 7.002 7.002 0 00-5-6.83V5h1V3H9zm3 6a5 5 0 015 5H7a5 5 0 015-5z"/></svg>` },
+      { id: 'nethop', name: 'NethOP', color: '#c084fc', icon: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C7.58 2 4 5.58 4 10v7c0 1.1.9 2 2 2h3v-5H7v-4c0-2.76 2.24-5 5-5s5 2.24 5 5v4h-2v5h3c1.1 0 2-.9 2-2v-7c0-4.42-3.58-8-8-8z"/></svg>` },
+      { id: 'smp', name: 'SMP', color: '#34d399', icon: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="10" cy="9" r="2.5" fill="#140f1d" opacity="0.55"/></svg>` },
+      { id: 'sword', name: 'Sword', color: '#7dd3fc', icon: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M6.92 5H5l9 9 1-.94m4.96 6.06l-.84.84a.996.996 0 01-1.41 0l-3.12-3.12-2.68 2.66-1.41-1.41 1.42-1.42L3 7.75V3h4.75l8.92 8.92 1.42-1.42 1.41 1.41-2.67 2.67 3.12 3.12c.4.4.4 1.03.01 1.42z"/></svg>` },
+      { id: 'axe', name: 'Axe', color: '#a5b4fc', icon: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L4 9v6l5-2v8h3v-9.5l8-4.5V5l-8-2z"/></svg>` },
+      { id: 'mace', name: 'Mace', color: '#f8fafc', icon: `<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 3.5l6 6-3.5 3.5-2-2-9.5 9.5-2-2 9.5-9.5-2-2L14.5 3.5z"/></svg>` }
+    ];
+
+    const DEFAULT_POINT_WEIGHTS = {
+      'HT1': 60, 'LT1': 45,
+      'HT2': 30, 'LT2': 20,
+      'HT3': 10, 'LT3': 6,
+      'HT4': 4,  'LT4': 3,
+      'HT5': 2,  'LT5': 1
+    };
+
+    const TIER_OPTIONS = ['', 'HT1', 'LT1', 'HT2', 'LT2', 'HT3', 'LT3', 'HT4', 'LT4', 'HT5', 'LT5'];
+
+    const REGION_BADGE_CLASSES = {
+      'NA': 'bg-rose-500/20 text-rose-200 border-rose-500/35',
+      'EU': 'bg-emerald-500/20 text-emerald-200 border-emerald-500/35',
+      'AS': 'bg-[#ff2e88]/20 text-[#ff7ab8] border-[#ff2e88]/35',
+      'SA': 'bg-purple-500/20 text-purple-200 border-purple-500/35',
+      'AU': 'bg-amber-500/20 text-amber-200 border-amber-500/35'
+    };
+
+    const FAQ_ITEMS = [
+      {
+        num: '01',
+        q: 'What is MineHeart?',
+        a: 'Official MH Tierlist ranks players in eight gamemodes (Vanilla/Crystal PvP, UHC, Pot, NethOP, SMP, Sword, Axe and Mace) from High Tier 1 to Low Tier 5, and combines those tiers into one overall leaderboard.',
+        hasGuideLink: true
+      },
+      {
+        num: '02',
+        q: 'What do HT1, LT1 and the other tiers mean?',
+        a: 'Each gamemode uses five tiers (Tier 1 to Tier 5) split into High Tier (HT) and Low Tier (LT) subdivisions. HT1 is the highest attainable rank in a gamemode, followed by LT1, HT2, LT2, down to LT5.'
+      },
+      {
+        num: '03',
+        q: 'How do I get tier tested?',
+        a: 'Join play.mineheart.net on Java (1.21 - 26.3) or Bedrock, type /tiertest, select your gamemode and region, and fight an official MineHeart tester.'
+      },
+      {
+        num: '04',
+        q: 'How is the overall leaderboard calculated?',
+        a: 'Each tier awards points based on the active point weights (HT1 = 60, LT1 = 45, HT2 = 30, LT2 = 20, HT3 = 10, LT3 = 6, HT4 = 4, LT4 = 3, HT5 = 2, LT5 = 1 by default). Your overall score is the sum across all 8 gamemodes.'
+      },
+      {
+        num: '05',
+        q: 'What are titles like Combat Master?',
+        a: 'Combat Titles reflect your point milestone: Combat Grandmaster (400+ pts), Combat Master (250+ pts), Combat Ace (150+ pts), and Combat Specialist (75+ pts)—or a custom title set by admins.'
+      },
+      {
+        num: '06',
+        q: 'What does a retired tier mean?',
+        a: 'When a player retires from active testing in a specific gamemode, their tier is marked as Retired (e.g., R-LT2) so their legacy rank remains visible and continues to count toward points.'
+      },
+      {
+        num: '07',
+        q: "How do I look up a player's tiers?",
+        a: 'Use the Search player... box in the top navigation bar (or press "/" on your keyboard) to filter by Minecraft IGN, then click any player card to open their full profile.'
+      },
+      {
+        num: '08',
+        q: 'What is the MineHeart server IP?',
+        a: 'The MineHeart server IP is play.mineheart.net (Java 1.21 - 26.3 and Bedrock Port 19132). Click any IP button to copy it to your clipboard.'
+      },
+      {
+        num: '09',
+        q: 'Does MineHeart run events?',
+        a: 'Yes! Check the Events tab, join our Discord (discord.gg/sW45Anq3RD), or subscribe to YouTube (@MineheartTiers) for tournaments, highlights, and tier test announcements.'
+      }
+    ];
+
+    const DEFAULT_STATE = {
+      settings: {
+        brandLeft: 'MINE',
+        brandRight: 'HEART',
+        heroSubtitle: 'Official MH Tierlist',
+        memberCount: '1k',
+        serverIP: 'play.mineheart.net',
+        onlinePlayers: '1,000 / 10,000',
+        serverOnline: true,
+        discordUrl: 'https://discord.gg/sW45Anq3RD',
+        youtubeUrl: 'https://www.youtube.com/@MineheartTiers',
+        heroDescription: 'Official MH Tierlist ranks players across 8 gamemodes from Tier 1 to Tier 5 on one overall leaderboard.'
+      },
+      pointWeights: { ...DEFAULT_POINT_WEIGHTS },
+      staff: [
+        { id: 'staff-1', username: 'MineheartStaff', discord: 'mineheart_owner', password: 'minehearttiers2026_$$$', role: 'Owner' }
+      ],
+      players: [
+        {
+          id: 'p1', ign: 'Marlowww', region: 'NA', customTitle: '',
+          tiers: { vanilla: 'HT1', uhc: 'LT1', pot: 'HT1', nethop: 'HT1', smp: 'HT1', sword: 'HT1', axe: 'LT1', mace: 'HT1' },
+          retired: {}
+        },
+        {
+          id: 'p2', ign: 'ItzRealMe', region: 'NA', customTitle: '',
+          tiers: { vanilla: 'HT1', uhc: 'LT2', pot: 'HT1', nethop: 'HT1', smp: 'HT1', sword: 'HT3', axe: 'LT2', mace: 'LT2' },
+          retired: { mace: true }
+        },
+        {
+          id: 'p3', ign: 'coldified', region: 'EU', customTitle: '',
+          tiers: { vanilla: 'LT1', uhc: 'HT1', pot: 'HT1', nethop: 'LT1', smp: 'HT2', sword: 'HT1', axe: 'HT1', mace: 'LT2' },
+          retired: {}
+        },
+        {
+          id: 'p4', ign: 'Swight', region: 'EU', customTitle: '',
+          tiers: { vanilla: 'HT2', uhc: 'HT1', pot: 'LT1', nethop: 'HT2', smp: 'LT2', sword: 'HT1', axe: 'HT1', mace: 'HT3' },
+          retired: {}
+        },
+        {
+          id: 'p5', ign: 'Lurrn', region: 'NA', customTitle: '',
+          tiers: { vanilla: 'HT1', uhc: 'HT3', pot: 'LT2', nethop: 'HT1', smp: 'LT1', sword: 'LT2', axe: 'HT3', mace: 'HT2' },
+          retired: {}
+        },
+        {
+          id: 'p6', ign: 'Doly', region: 'EU', customTitle: '',
+          tiers: { vanilla: 'LT2', uhc: 'LT1', pot: 'HT1', nethop: 'LT2', smp: 'HT2', sword: 'LT1', axe: 'LT2', mace: 'HT3' },
+          retired: {}
+        }
+      ],
+      events: [
+        {
+          id: 'ev1',
+          title: 'MineHeart 1k Official Cup #1',
+          mode: 'Vanilla',
+          prize: '$250 + Grandmaster Badge',
+          date: 'Saturday • 19:00 UTC • NA / EU'
+        },
+        {
+          id: 'ev2',
+          title: 'Heartbreak Sword 1v1 Invitational',
+          mode: 'Sword',
+          prize: '$150 + Custom Title',
+          date: 'Wednesday • 20:00 UTC • Global'
+        },
+        {
+          id: 'ev3',
+          title: 'Mace & SMP Tier Testing Weekend',
+          mode: 'Mace',
+          prize: 'Priority Queue & Verified Tiers',
+          date: 'All Weekend • play.mineheart.net'
+        }
+      ],
+      auditLog: [
+        { time: 'System', user: 'System', action: 'Initialized MineHeart Official MH Tierlist with 1k community members.' }
+      ]
+    };
+
+    // ==================== STATE & SESSION ====================
+    let appState = loadState();
+    let currentView = 'home';
+    let selectedRankingMode = 'overall';
+    let globalRegionFilter = 'ALL';
+    let globalSearchQuery = '';
+    let activeFaqIndex = 0;
+    let loggedInStaff = null;
+
+    let secretKeyBuffer = '';
+    let copyrightClickCount = 0;
+    let copyrightClickTimer = null;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return JSON.parse(JSON.stringify(DEFAULT_STATE));
+        const parsed = JSON.parse(raw);
+        return {
+          ...JSON.parse(JSON.stringify(DEFAULT_STATE)),
+          ...parsed,
+          settings: { ...DEFAULT_STATE.settings, ...(parsed.settings || {}) },
+          pointWeights: { ...DEFAULT_POINT_WEIGHTS, ...(parsed.pointWeights || {}) }
+        };
+      } catch (err) {
+        return JSON.parse(JSON.stringify(DEFAULT_STATE));
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (err) {
+        console.error('Error saving state:', err);
+      }
+    }
+
+    function addAuditLog(action) {
+      const actor = loggedInStaff ? `${loggedInStaff.username} (${loggedInStaff.role})` : 'System';
+      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' • ' + new Date().toLocaleDateString();
+      appState.auditLog.unshift({ time, user: actor, action });
+      if (appState.auditLog.length > 60) appState.auditLog.pop();
+      saveState();
+    }
+
+    // ==================== MOUNT 3D HEART EMBLEMS ====================
+    function mountHeartEmblems() {
+      const tpl = document.getElementById('mh-heart-svg-tpl');
+      if (!tpl) return;
+      ['nav-heart-slot', 'hero-heart-slot', 'strip-heart-slot', 'guide-heart-slot', 'rankings-heart-slot', 'serverpage-heart-slot', 'footer-heart-slot'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.innerHTML = '';
+          el.appendChild(tpl.content.cloneNode(true));
+        }
+      });
+    }
+
+    // ==================== TIER & RANKING CALCULATIONS ====================
+    function getTierPoints(tierCode) {
+      if (!tierCode) return 0;
+      const val = appState.pointWeights[tierCode];
+      return typeof val === 'number' ? val : (DEFAULT_POINT_WEIGHTS[tierCode] || 0);
+    }
+
+    function calculatePlayerPoints(player) {
+      let sum = 0;
+      for (const mode of GAMEMODES) {
+        sum += getTierPoints(player.tiers?.[mode.id] || '');
+      }
+      return sum;
+    }
+
+    function getPlayerTitleInfo(player, points) {
+      if (player.customTitle && player.customTitle.trim()) {
+        return { title: player.customTitle.trim(), color: 'text-[#ff7ab8]', icon: '💖' };
+      }
+      if (points >= 400) return { title: 'Combat Grandmaster', color: 'text-amber-400', icon: '👑' };
+      if (points >= 250) return { title: 'Combat Master', color: 'text-[#ff7ab8]', icon: '⚔️' };
+      if (points >= 150) return { title: 'Combat Ace', color: 'text-rose-400', icon: '🔥' };
+      if (points >= 75)  return { title: 'Combat Specialist', color: 'text-purple-200', icon: '🛡️' };
+      return { title: 'Combat Challenger', color: 'text-purple-200/70', icon: '🗡️' };
+    }
+
+    function getRankedPlayers() {
+      return appState.players
+        .map(p => ({ ...p, points: calculatePlayerPoints(p) }))
+        .sort((a, b) => b.points - a.points)
+        .map((p, idx) => ({ ...p, overallRank: idx + 1 }));
+    }
+
+    function getFilteredPlayers() {
+      return getRankedPlayers().filter(p => {
+        const regionMatch = globalRegionFilter === 'ALL' || p.region === globalRegionFilter;
+        const searchMatch = !globalSearchQuery || p.ign.toLowerCase().includes(globalSearchQuery.toLowerCase());
+        return regionMatch && searchMatch;
+      });
+    }
+
+    function getSkinBustUrl(ign) {
+      return `https://vzge.me/bust/128/${encodeURIComponent(ign)}.png`;
+    }
+
+    function getFallbackAvatarUrl(ign) {
+      return `https://mc-heads.net/avatar/${encodeURIComponent(ign)}/128`;
+    }
+
+    function getTierPillClass(tier, isRetired = false) {
+      if (!tier) return 'bg-[#140f1d] text-purple-200/35 border border-[#35274e]';
+      if (isRetired) return 'tier-badge-retired';
+      if (tier.startsWith('HT1') || tier.startsWith('LT1')) return 'tier-badge-ht';
+      if (tier.startsWith('HT2') || tier.startsWith('LT2')) return 'tier-badge-mid';
+      return 'tier-badge-lt';
+    }
+
+    // ==================== TOAST & CLIPBOARD ====================
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const tone = type === 'error'
+        ? 'border-rose-500/50 bg-rose-950/95 text-rose-100'
+        : 'border-[#ff2e88]/50 bg-[#1e162c]/95 text-[#f8fafc]';
+      toast.className = `pointer-events-auto px-4 py-3 rounded-xl border ${tone} shadow-xl text-xs sm:text-sm font-medium flex items-center gap-2.5 transform transition-all duration-300 translate-y-2 opacity-0`;
+      toast.innerHTML = `<span class="w-2 h-2 rounded-full ${type === 'error' ? 'bg-rose-400' : 'bg-[#ff2e88]'}"></span><span>${message}</span>`;
+      container.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.remove('translate-y-2', 'opacity-0'));
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 2800);
+    }
+
+    function copyServerIP() {
+      const ip = appState.settings.serverIP;
+      const temp = document.createElement('input');
+      temp.value = ip;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      showToast(`Copied Server IP: ${ip}`);
+    }
+
+    // ==================== NAVIGATION & HIDDEN ADMIN TRIGGERS ====================
+    function navigate(view) {
+      currentView = view;
+      ['home', 'rankings', 'server-ip', 'events', 'guides', 'admin'].forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (el) el.classList.toggle('hidden', v !== view);
+      });
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        const active = btn.getAttribute('data-nav') === view;
+        if (active) {
+          btn.classList.add('text-[#f8fafc]', 'bg-[#1e162c]', 'border', 'border-[#35274e]');
+          btn.classList.remove('text-purple-200/70');
+        } else {
+          btn.classList.remove('text-[#f8fafc]', 'bg-[#1e162c]', 'border', 'border-[#35274e]');
+          btn.classList.add('text-purple-200/70');
+        }
+      });
+
+      if (view === 'home') renderHome();
+      if (view === 'rankings') renderRankings();
+      if (view === 'events') renderEvents();
+      if (view === 'admin') renderAdminView();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openGamemodeRankings(modeId) {
+      selectedRankingMode = modeId;
+      navigate('rankings');
+    }
+
+    function openGuideArticle(id) {
+      navigate('guides');
+      setTimeout(() => {
+        const card = document.getElementById(`guide-card-${id}`);
+        if (card) {
+          card.classList.add('border-[#ff2e88]');
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => card.classList.remove('border-[#ff2e88]'), 2000);
+        }
+      }, 100);
+    }
+
+    function scrollToTesting() {
+      document.getElementById('get-tier-tested-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleRegionChange(region) {
+      globalRegionFilter = region;
+      refreshActiveView();
+    }
+
+    function handleSearchInput(val) {
+      globalSearchQuery = val.trim();
+      if (currentView === 'home' && globalSearchQuery.length > 0) {
+        navigate('rankings');
+      } else {
+        refreshActiveView();
+      }
+    }
+
+    function refreshActiveView() {
+      if (currentView === 'home') renderHome();
+      if (currentView === 'rankings') renderRankings();
+      if (currentView === 'events') renderEvents();
+    }
+
+    function handleSecretCopyrightClick() {
+      copyrightClickCount++;
+      clearTimeout(copyrightClickTimer);
+      if (copyrightClickCount >= 5) {
+        copyrightClickCount = 0;
+        navigate('admin');
+      } else {
+        copyrightClickTimer = setTimeout(() => { copyrightClickCount = 0; }, 1400);
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && (e.key === 'L' || e.key === 'l')) {
+        e.preventDefault();
+        navigate('admin');
+        return;
+      }
+
+      const tag = document.activeElement?.tagName;
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+        if (e.key === '/') {
+          e.preventDefault();
+          document.getElementById('global-search-input')?.focus();
+          return;
+        }
+        if (e.key.length === 1) {
+          secretKeyBuffer = (secretKeyBuffer + e.key.toLowerCase()).slice(-10);
+          if (secretKeyBuffer.endsWith('staff')) {
+            secretKeyBuffer = '';
+            navigate('admin');
+          }
+        }
+      }
+
+      if (e.key === 'Escape') {
+        closePlayerModal();
+        closeInfoModal();
+      }
+    });
+
+    // ==================== APPLY BRANDING, SOCIALS & SERVER STATUS ====================
+    function applySettingsToUI() {
+      const s = appState.settings;
+      const fullBrand = `${s.brandLeft}${s.brandRight}`;
+      document.title = `${fullBrand} — ${s.heroSubtitle}`;
+
+      document.getElementById('nav-brand-left').textContent = s.brandLeft;
+      document.getElementById('nav-brand-right').textContent = s.brandRight;
+      document.getElementById('hero-brand-left').textContent = s.brandLeft;
+      document.getElementById('hero-brand-right').textContent = s.brandRight;
+      document.getElementById('footer-brand-left').textContent = s.brandLeft;
+      document.getElementById('footer-brand-right').textContent = s.brandRight;
+      document.getElementById('footer-brand-name').textContent = fullBrand;
+
+      document.getElementById('hero-subtitle').textContent = s.heroSubtitle;
+      document.getElementById('hero-description').textContent = s.heroDescription;
+      document.getElementById('hero-member-badge').textContent = s.memberCount;
+      document.getElementById('strip-member-count').textContent = s.memberCount;
+      document.querySelectorAll('.member-count-sync').forEach(el => { el.textContent = s.memberCount; });
+
+      ['strip-server-ip', 'testing-ip-inline', 'testing-ip-btn', 'step-ip-text', 'rankings-box-ip', 'serverpage-ip-inline', 'serverpage-ip-btn', 'card-server-address', 'guide-ip-text', 'footer-server-ip'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = s.serverIP;
+      });
+
+      const isOnline = s.serverOnline !== false;
+      const statusText = isOnline ? 'Online' : 'Offline';
+      const dotClass = isOnline ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]' : 'bg-rose-500';
+      document.getElementById('strip-status-label').textContent = statusText;
+      document.getElementById('strip-status-dot').className = `w-2.5 h-2.5 rounded-full ${dotClass}`;
+      document.getElementById('strip-online-players').textContent = s.onlinePlayers;
+      document.getElementById('serverpage-status-label').textContent = statusText;
+      document.getElementById('serverpage-status-dot').className = `w-2.5 h-2.5 rounded-full ${dotClass}`;
+      document.getElementById('serverpage-online-count').textContent = s.onlinePlayers;
+
+      ['nav-discord-link', 'header-discord-quick', 'mobile-discord-link', 'testing-discord-btn', 'step-discord-link', 'rankings-discord-icon', 'events-discord-cta', 'footer-discord-link'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.href = s.discordUrl;
+      });
+
+      ['nav-youtube-link', 'header-youtube-quick', 'mobile-youtube-link', 'hero-yt-pill', 'testing-youtube-btn', 'rankings-youtube-icon', 'events-youtube-cta', 'footer-youtube-link'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.href = s.youtubeUrl;
+      });
+    }
+
+    // ==================== RENDER HOME & FAQ ====================
+    function renderHome() {
+      const players = getFilteredPlayers().slice(0, 3);
+      const container = document.getElementById('top-players-container');
+
+      if (players.length === 0) {
+        container.innerHTML = `<div class="p-6 rounded-xl bg-[#140f1d] border border-[#35274e] text-center text-sm text-purple-200/70">No players match your filter.</div>`;
+      } else {
+        container.innerHTML = players.map(player => {
+          const rankClass = player.overallRank === 1 ? 'rank-badge-1 text-[#140f1d]' :
+                            player.overallRank === 2 ? 'rank-badge-2 text-[#140f1d]' :
+                            player.overallRank === 3 ? 'rank-badge-3 text-white' : 'rank-badge-other text-[#f8fafc]';
+          const titleInfo = getPlayerTitleInfo(player, player.points);
+          const regionClass = REGION_BADGE_CLASSES[player.region] || 'bg-[#281d3b] text-[#f8fafc]';
+
+          const modePills = GAMEMODES.map(m => {
+            const tier = player.tiers?.[m.id] || '';
+            const isRet = !!player.retired?.[m.id];
+            const pts = getTierPoints(tier);
+            const label = tier ? (isRet ? `R-${tier}` : tier) : '—';
+            const pillClass = tier ? getTierPillClass(tier, isRet) : 'bg-[#140f1d] text-purple-200/35 border border-[#35274e]';
+            return `
+              <div class="relative group/t flex flex-col items-center gap-1" title="${m.name}: ${isRet ? 'Retired ' : ''}${tier || 'Unranked'} (${pts} pts)">
+                <div class="w-6 h-6 rounded-full bg-[#140f1d] border border-[#35274e] flex items-center justify-center" style="color:${m.color}">${m.icon}</div>
+                <span class="text-[10px] font-bold px-1.5 py-0.2 rounded ${pillClass}">${label}</span>
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <div onclick="openPlayerModal('${player.id}')" class="bg-[#140f1d] hover:bg-[#281d3b] border border-[#35274e] hover:border-[#ff2e88]/55 rounded-xl p-3 sm:p-3.5 flex items-center justify-between gap-3 cursor-pointer transition group">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="flex items-center rounded-lg overflow-hidden shrink-0 ${rankClass}">
+                  <span class="px-2.5 py-2 font-black italic text-base sm:text-lg">${player.overallRank}.</span>
+                  <img src="${getSkinBustUrl(player.ign)}" onerror="this.onerror=null;this.src='${getFallbackAvatarUrl(player.ign)}'" alt="${player.ign}" class="w-11 h-11 object-cover object-top bg-black/25" />
+                </div>
+                <div class="min-w-0">
+                  <div class="font-bold text-[#f8fafc] text-sm sm:text-base truncate group-hover:text-[#ff4da6] transition">${player.ign}</div>
+                  <div class="text-[11px] font-medium ${titleInfo.color} flex items-center gap-1 truncate">
+                    <span>${titleInfo.icon}</span>
+                    <span>${titleInfo.title}</span>
+                    <span class="text-purple-200/55">(${player.points} pts)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hidden sm:flex items-center gap-1.5">
+                ${modePills}
+              </div>
+
+              <span class="px-2.5 py-1 rounded-md text-xs font-bold border shrink-0 ${regionClass}">${player.region}</span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('gamemodes-grid').innerHTML = GAMEMODES.map(m => `
+        <button onclick="openGamemodeRankings('${m.id}')" class="bg-[#1e162c] hover:bg-[#281d3b] border border-[#35274e] hover:border-[#ff2e88]/55 rounded-2xl p-4 flex flex-col items-center justify-center gap-3 transition group">
+          <div class="w-11 h-11 rounded-xl bg-[#140f1d] border border-[#35274e] group-hover:scale-110 transition-transform flex items-center justify-center" style="color:${m.color}">${m.icon}</div>
+          <span class="text-xs sm:text-sm font-bold text-[#f8fafc]">${m.name}</span>
+        </button>
+      `).join('');
+
+      renderFaqAccordion();
+    }
+
+    function renderFaqAccordion() {
+      document.getElementById('faq-accordion-list').innerHTML = FAQ_ITEMS.map((item, idx) => {
+        const open = activeFaqIndex === idx;
+        return `
+          <div class="rounded-2xl bg-[#1e162c] border ${open ? 'border-[#ff2e88]/65' : 'border-[#35274e]'} transition overflow-hidden">
+            <button onclick="activeFaqIndex = (${open} ? -1 : ${idx}); renderFaqAccordion();" class="w-full px-5 py-4 flex items-center justify-between gap-4 text-left">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-mono font-bold ${open ? 'text-[#ff4da6]' : 'text-purple-200/50'}">${item.num}</span>
+                <span class="text-sm sm:text-base font-bold text-[#f8fafc]">${item.q}</span>
+              </div>
+              <span class="w-7 h-7 rounded-lg ${open ? 'bg-[#ff2e88]/20 text-[#ff4da6]' : 'bg-[#281d3b] text-purple-200/70'} flex items-center justify-center text-xs font-bold shrink-0">${open ? '✕' : '+'}</span>
+            </button>
+            ${open ? `
+              <div class="px-5 pb-5 pl-12 space-y-3 text-xs sm:text-sm text-purple-100/75 leading-relaxed">
+                <p>${item.a}</p>
+                ${item.hasGuideLink ? `<button onclick="navigate('guides')" class="text-[#ff4da6] hover:underline font-semibold text-xs inline-flex items-center gap-1">Learn more →</button>` : ''}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ==================== RENDER RANKINGS ====================
+    function renderRankings() {
+      const tabs = [
+        { id: 'overall', name: 'Overall', color: '#fbbf24', icon: '🏆' },
+        { id: 'ltms', name: 'LTMs', color: '#ff4da6', icon: '⚔️' },
+        ...GAMEMODES
+      ];
+
+      document.getElementById('rankings-mode-tabs').innerHTML = tabs.map(t => {
+        const active = selectedRankingMode === t.id;
+        return `
+          <button onclick="selectedRankingMode='${t.id}'; renderRankings();" class="ranking-tab ${active ? 'active' : 'text-purple-200/65 hover:text-[#f8fafc] hover:bg-[#1e162c]/40'} px-4 py-3 flex flex-col items-center gap-1.5 min-w-[76px] shrink-0">
+            <span class="text-base leading-none" style="color:${t.color}">${t.icon}</span>
+            <span class="text-xs font-bold">${t.name}</span>
+          </button>
+        `;
+      }).join('');
+
+      const overallBox = document.getElementById('rankings-overall-container');
+      const tiersBox = document.getElementById('rankings-tiers-container');
+      const titleEl = document.getElementById('rankings-heading-title');
+      const subEl = document.getElementById('rankings-heading-subtitle');
+      const filtered = getFilteredPlayers();
+
+      if (selectedRankingMode === 'overall' || selectedRankingMode === 'ltms') {
+        overallBox.classList.remove('hidden');
+        tiersBox.classList.add('hidden');
+
+        if (selectedRankingMode === 'overall') {
+          titleEl.textContent = 'Overall Minecraft PvP Rankings';
+          subEl.textContent = `${appState.players.length} ranked players across 8 gamemodes • ${appState.settings.memberCount} members`;
+        } else {
+          titleEl.textContent = 'Limited-Time Modes (LTMs) Rankings';
+          subEl.textContent = 'Combined leaderboard across Mace, SMP, NethOP, and UHC';
+        }
+
+        const body = document.getElementById('overall-leaderboard-body');
+        if (filtered.length === 0) {
+          body.innerHTML = `<div class="py-10 text-center text-sm text-purple-200/70">No players match your current filter.</div>`;
+          return;
+        }
+
+        const rows = selectedRankingMode === 'ltms'
+          ? [...filtered].map(p => {
+              const ltmPts = ['mace', 'smp', 'nethop', 'uhc'].reduce((acc, id) => acc + getTierPoints(p.tiers?.[id]), 0);
+              return { ...p, displayPoints: ltmPts };
+            }).sort((a, b) => b.displayPoints - a.displayPoints).map((p, i) => ({ ...p, displayRank: i + 1 }))
+          : filtered.map(p => ({ ...p, displayPoints: p.points, displayRank: p.overallRank }));
+
+        body.innerHTML = rows.map(player => {
+          const rankBadge = player.displayRank === 1 ? 'rank-badge-1 text-[#140f1d]' :
+                            player.displayRank === 2 ? 'rank-badge-2 text-[#140f1d]' :
+                            player.displayRank === 3 ? 'rank-badge-3 text-white' : 'bg-[#281d3b] text-[#f8fafc]';
+          const titleInfo = getPlayerTitleInfo(player, player.displayPoints);
+          const regionClass = REGION_BADGE_CLASSES[player.region] || '';
+
+          const modeBadges = GAMEMODES.map(m => {
+            const tier = player.tiers?.[m.id] || '';
+            const isRet = !!player.retired?.[m.id];
+            const pts = getTierPoints(tier);
+            const pillText = tier ? (isRet ? `R-${tier}` : tier) : '—';
+
+            return `
+              <div class="relative group/tier flex flex-col items-center gap-1 min-w-[42px]">
+                <div class="w-7 h-7 rounded-full bg-[#140f1d] border border-[#35274e] flex items-center justify-center" style="color:${m.color}">${m.icon}</div>
+                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${getTierPillClass(tier, isRet)}">${pillText}</span>
+                <div class="pointer-events-none opacity-0 group-hover/tier:opacity-100 transition-opacity absolute -top-12 left-1/2 -translate-x-1/2 z-30 bg-[#140f1d] border border-[#4e3973] rounded-xl px-3 py-1.5 shadow-2xl whitespace-nowrap text-center">
+                  <div class="text-xs font-extrabold text-[#f8fafc]">${isRet ? 'Retired ' : ''}${tier || 'Unranked'}</div>
+                  <div class="text-[10px] text-purple-200/70">${pts} points</div>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <div onclick="openPlayerModal('${player.id}')" class="bg-[#140f1d] hover:bg-[#281d3b] border border-[#35274e] hover:border-[#ff2e88]/55 rounded-xl p-3 sm:px-4 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer transition group">
+              <div class="flex items-center gap-3.5 min-w-0">
+                <div class="flex items-center rounded-lg overflow-hidden shrink-0 ${rankBadge}">
+                  <span class="px-3 py-2 font-black italic text-base sm:text-lg">${player.displayRank}.</span>
+                  <img src="${getSkinBustUrl(player.ign)}" onerror="this.onerror=null;this.src='${getFallbackAvatarUrl(player.ign)}'" alt="${player.ign}" class="w-11 h-11 object-cover object-top bg-black/25" />
+                </div>
+                <div class="min-w-0">
+                  <div class="font-bold text-[#f8fafc] text-base truncate group-hover:text-[#ff4da6] transition">${player.ign}</div>
+                  <div class="text-xs font-medium ${titleInfo.color} flex items-center gap-1.5">
+                    <span>${titleInfo.icon}</span>
+                    <span>${titleInfo.title}</span>
+                    <span class="text-purple-200/55">(${player.displayPoints} points)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between md:justify-end gap-4 sm:gap-8">
+                <span class="px-2.5 py-1 rounded-md text-xs font-bold border ${regionClass}">${player.region}</span>
+                <div class="flex items-center gap-1.5 overflow-x-auto">
+                  ${modeBadges}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        overallBox.classList.add('hidden');
+        tiersBox.classList.remove('hidden');
+
+        const modeObj = GAMEMODES.find(m => m.id === selectedRankingMode);
+        titleEl.textContent = `${modeObj ? modeObj.name : ''} PvP Tier List`;
+        subEl.textContent = `Players placed from Tier 1 to Tier 5 in ${modeObj ? modeObj.name : ''}`;
+
+        tiersBox.innerHTML = [1, 2, 3, 4, 5].map(tNum => {
+          const ht = `HT${tNum}`;
+          const lt = `LT${tNum}`;
+          const htPlayers = filtered.filter(p => p.tiers?.[selectedRankingMode] === ht);
+          const ltPlayers = filtered.filter(p => p.tiers?.[selectedRankingMode] === lt);
+
+          const headStyle = tNum === 1 ? 'border-amber-500/40 text-amber-300 bg-amber-500/10' :
+                            tNum === 2 ? 'border-[#ff2e88]/40 text-[#ff7ab8] bg-[#ff2e88]/10' :
+                            'border-[#35274e] text-[#f8fafc] bg-[#140f1d]';
+
+          const renderCard = (p, code) => {
+            const isRet = !!p.retired?.[selectedRankingMode];
+            const regionClass = REGION_BADGE_CLASSES[p.region] || '';
+            return `
+              <div onclick="openPlayerModal('${p.id}')" class="p-2.5 rounded-xl bg-[#140f1d] hover:bg-[#281d3b] border border-[#35274e] flex items-center justify-between gap-2 cursor-pointer transition">
+                <div class="flex items-center gap-2 min-w-0">
+                  <img src="${getFallbackAvatarUrl(p.ign)}" alt="${p.ign}" class="w-6 h-6 rounded bg-black/30 shrink-0" />
+                  <span class="text-xs font-bold text-[#f8fafc] truncate">${p.ign}</span>
+                </div>
+                <div class="flex items-center gap-1.5 shrink-0">
+                  <span class="text-[10px] font-bold px-1.5 py-0.5 rounded ${getTierPillClass(code, isRet)}">${isRet ? 'R-' + code : code}</span>
+                  <span class="text-[10px] font-bold px-1.5 py-0.5 rounded border ${regionClass}">${p.region}</span>
+                </div>
+              </div>
+            `;
+          };
+
+          return `
+            <div class="bg-[#140f1d] border border-[#35274e] rounded-2xl overflow-hidden flex flex-col">
+              <div class="px-4 py-3 border-b ${headStyle} font-extrabold text-sm flex items-center justify-between">
+                <span>Tier ${tNum}</span>
+                <span class="text-xs opacity-80">${htPlayers.length + ltPlayers.length}</span>
+              </div>
+              <div class="p-3 space-y-2 flex-1">
+                ${htPlayers.map(p => renderCard(p, ht)).join('')}
+                ${ltPlayers.map(p => renderCard(p, lt)).join('')}
+                ${(htPlayers.length + ltPlayers.length === 0) ? `<div class="py-8 text-center text-xs text-purple-200/40">No players in Tier ${tNum}</div>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // ==================== RENDER EVENTS ====================
+    function renderEvents() {
+      const grid = document.getElementById('events-grid');
+      if (appState.events.length === 0) {
+        grid.innerHTML = `<div class="col-span-full p-8 rounded-2xl bg-[#1e162c] border border-[#35274e] text-center text-purple-200/70 text-sm">No events scheduled right now.</div>`;
+        return;
+      }
+
+      grid.innerHTML = appState.events.map(ev => `
+        <div class="bg-[#1e162c] border border-[#35274e] hover:border-[#ff2e88]/55 rounded-2xl p-6 flex flex-col justify-between space-y-4 transition">
+          <div class="space-y-3">
+            <span class="px-2.5 py-1 rounded-lg bg-[#ff2e88]/15 text-[#ff7ab8] border border-[#ff2e88]/35 text-xs font-bold">${ev.mode}</span>
+            <h3 class="text-lg font-extrabold text-[#f8fafc]">${ev.title}</h3>
+            <div class="space-y-1.5 text-xs text-purple-200/75">
+              <div><strong class="text-amber-400">Prize:</strong> <span class="text-[#f8fafc]">${ev.prize}</span></div>
+              <div><strong class="text-[#ff7ab8]">When:</strong> <span>${ev.date}</span></div>
+            </div>
+          </div>
+          <a href="${appState.settings.discordUrl}" target="_blank" class="w-full py-2.5 rounded-xl bg-[#281d3b] hover:bg-gradient-to-r hover:from-[#ff2e88] hover:to-[#ff4da6] text-[#f8fafc] hover:text-white text-xs font-bold text-center border border-[#35274e] transition">
+            Join via MineHeart Discord
+          </a>
+        </div>
+      `).join('');
+    }
+
+    // ==================== MODALS ====================
+    function openPlayerModal(playerId) {
+      const player = getRankedPlayers().find(p => p.id === playerId);
+      if (!player) return;
+
+      const titleInfo = getPlayerTitleInfo(player, player.points);
+      const regionClass = REGION_BADGE_CLASSES[player.region] || '';
+
+      const modeCards = GAMEMODES.map(m => {
+        const tier = player.tiers?.[m.id] || '';
+        const isRet = !!player.retired?.[m.id];
+        const pts = getTierPoints(tier);
+        const label = tier ? `${isRet ? 'Retired ' : ''}${tier}` : 'Unranked';
+        return `
+          <div class="bg-[#140f1d] border border-[#35274e] rounded-xl p-3 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-[#1e162c] border border-[#35274e] flex items-center justify-center" style="color:${m.color}">${m.icon}</div>
+              <div>
+                <div class="text-xs font-bold text-[#f8fafc]">${m.name}</div>
+                <div class="text-[10px] text-purple-200/60">${pts} points</div>
+              </div>
+            </div>
+            <span class="text-xs font-extrabold px-2.5 py-1 rounded-lg ${getTierPillClass(tier, isRet)}">${label}</span>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('player-modal-content').innerHTML = `
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5 pb-6 border-b border-[#35274e]">
+          <img src="${getSkinBustUrl(player.ign)}" onerror="this.onerror=null;this.src='${getFallbackAvatarUrl(player.ign)}'" alt="${player.ign}" class="w-24 h-24 rounded-2xl bg-[#140f1d] border border-[#4e3973] object-cover object-top shadow-lg" />
+          <div class="text-center sm:text-left space-y-2 flex-1">
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+              <span class="px-3 py-1 rounded-lg bg-gradient-to-r from-[#ff2e88] to-[#ff4da6] text-white font-black text-sm">#${player.overallRank}</span>
+              <h3 class="text-2xl font-black text-[#f8fafc]">${player.ign}</h3>
+              <span class="px-2.5 py-1 rounded-md text-xs font-bold border ${regionClass}">${player.region}</span>
+            </div>
+            <div class="text-sm font-semibold ${titleInfo.color}">
+              ${titleInfo.icon} ${titleInfo.title} • <span class="text-[#f8fafc]">${player.points} Total Points</span>
+            </div>
+            <p class="text-xs text-purple-200/70">Official verified PvP profile on MineHeart.</p>
+          </div>
+        </div>
+        <div class="pt-5 space-y-3">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-purple-200/70">Gamemode Breakdown</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">${modeCards}</div>
+        </div>
+      `;
+
+      const modal = document.getElementById('player-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closePlayerModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      const modal = document.getElementById('player-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openInfoModal() {
+      const codes = ['HT1', 'LT1', 'HT2', 'LT2', 'HT3', 'LT3', 'HT4', 'LT4', 'HT5', 'LT5'];
+      document.getElementById('info-points-grid').innerHTML = codes.map((c, idx) => {
+        const cls = idx < 2 ? 'text-amber-400' : idx < 4 ? 'text-[#ff7ab8]' : 'text-purple-200';
+        return `<div class="p-2 rounded-lg bg-[#140f1d] border border-[#35274e] flex justify-between"><span class="${cls} font-bold">${c}</span><span>${getTierPoints(c)} pts</span></div>`;
+      }).join('');
+      const modal = document.getElementById('info-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeInfoModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      const modal = document.getElementById('info-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // ==================== STAFF & ADMINISTRATION DASHBOARD ====================
+    function renderAdminView() {
+      const loginBox = document.getElementById('admin-login-box');
+      const dashBox = document.getElementById('admin-dashboard-box');
+
+      if (!loggedInStaff) {
+        loginBox.classList.remove('hidden');
+        dashBox.classList.add('hidden');
+      } else {
+        loginBox.classList.add('hidden');
+        dashBox.classList.remove('hidden');
+        document.getElementById('current-staff-name').textContent = loggedInStaff.username;
+        document.getElementById('current-staff-role-badge').textContent = loggedInStaff.role;
+
+        populatePlayerTierInputs();
+        renderAdminPlayersList();
+        renderAdminStaffList();
+        populateSettingsForm();
+        renderAdminEventsList();
+        renderAdminAuditLog();
+      }
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      const found = appState.staff.find(s => s.username === username && s.password === password);
+      if (!found) {
+        showToast('Invalid credentials.', 'error');
+        return;
+      }
+
+      loggedInStaff = found;
+      document.getElementById('login-password').value = '';
+      addAuditLog(`Logged into MineHeart Administration Panel.`);
+      showToast(`Authenticated as ${found.username} (${found.role})`);
+      renderAdminView();
+    }
+
+    function handleAdminLogout() {
+      loggedInStaff = null;
+      showToast('Logged out.');
+      navigate('home');
+    }
+
+    function switchAdminTab(tabName) {
+      document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`admin-tab-${tabName}`)?.classList.remove('hidden');
+
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        const active = btn.getAttribute('data-admin-tab') === tabName;
+        if (active) {
+          btn.classList.add('bg-[#1e162c]', 'text-[#ff4da6]', 'border-t', 'border-x', 'border-[#35274e]');
+          btn.classList.remove('text-purple-200/70');
+        } else {
+          btn.classList.remove('bg-[#1e162c]', 'text-[#ff4da6]', 'border-t', 'border-x', 'border-[#35274e]');
+          btn.classList.add('text-purple-200/70');
+        }
+      });
+    }
+
+    function populatePlayerTierInputs(existingTiers = {}, existingRetired = {}) {
+      document.getElementById('admin-gamemode-tier-inputs').innerHTML = GAMEMODES.map(m => {
+        const curTier = existingTiers[m.id] || '';
+        const isRet = !!existingRetired[m.id];
+        const opts = TIER_OPTIONS.map(o => `<option value="${o}" ${o === curTier ? 'selected' : ''}>${o || 'Unranked'}</option>`).join('');
+        return `
+          <div class="bg-[#140f1d] border border-[#35274e] rounded-xl p-2.5 space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-xs font-semibold text-[#f8fafc] flex items-center gap-1.5">
+                <span style="color:${m.color}">${m.icon}</span>
+                ${m.name}
+              </span>
+              <select id="adm-tier-${m.id}" class="bg-[#1e162c] border border-[#4e3973] rounded-lg px-2 py-1 text-xs text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]">
+                ${opts}
+              </select>
+            </div>
+            <label class="flex items-center gap-1.5 text-[11px] text-purple-200/70 cursor-pointer select-none">
+              <input id="adm-ret-${m.id}" type="checkbox" ${isRet ? 'checked' : ''} class="rounded bg-[#1e162c] border-[#4e3973] text-[#ff2e88]" />
+              <span>Retired Tier</span>
+            </label>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function clearPlayerForm() {
+      document.getElementById('edit-player-id').value = '';
+      document.getElementById('player-ign-input').value = '';
+      document.getElementById('player-region-input').value = 'NA';
+      document.getElementById('player-custom-title-input').value = '';
+      document.getElementById('player-form-title').textContent = 'Add / Edit Player';
+      populatePlayerTierInputs({}, {});
+    }
+
+    function editPlayerInAdmin(playerId) {
+      const p = appState.players.find(item => item.id === playerId);
+      if (!p) return;
+      document.getElementById('edit-player-id').value = p.id;
+      document.getElementById('player-ign-input').value = p.ign;
+      document.getElementById('player-region-input').value = p.region;
+      document.getElementById('player-custom-title-input').value = p.customTitle || '';
+      document.getElementById('player-form-title').textContent = `Editing ${p.ign}`;
+      populatePlayerTierInputs(p.tiers || {}, p.retired || {});
+    }
+
+    function handleSavePlayer(e) {
+      e.preventDefault();
+      const editId = document.getElementById('edit-player-id').value;
+      const ign = document.getElementById('player-ign-input').value.trim();
+      const region = document.getElementById('player-region-input').value;
+      const customTitle = document.getElementById('player-custom-title-input').value.trim();
+
+      const tiers = {};
+      const retired = {};
+      GAMEMODES.forEach(m => {
+        tiers[m.id] = document.getElementById(`adm-tier-${m.id}`).value;
+        retired[m.id] = document.getElementById(`adm-ret-${m.id}`).checked;
+      });
+
+      if (editId) {
+        const idx = appState.players.findIndex(p => p.id === editId);
+        if (idx !== -1) {
+          appState.players[idx] = { ...appState.players[idx], ign, region, customTitle, tiers, retired };
+          addAuditLog(`Updated tiers/profile for ${ign} (${region}).`);
+          showToast(`Updated ${ign}!`);
+        }
+      } else {
+        const existingIdx = appState.players.findIndex(p => p.ign.toLowerCase() === ign.toLowerCase());
+        if (existingIdx !== -1) {
+          appState.players[existingIdx] = { ...appState.players[existingIdx], ign, region, customTitle, tiers, retired };
+          addAuditLog(`Updated player ${ign} (${region}).`);
+          showToast(`Updated ${ign}!`);
+        } else {
+          appState.players.push({ id: 'p-' + Date.now(), ign, region, customTitle, tiers, retired });
+          addAuditLog(`Added new player ${ign} (${region}).`);
+          showToast(`Added ${ign} to leaderboard!`);
+        }
+      }
+
+      saveState();
+      clearPlayerForm();
+      renderAdminPlayersList(document.getElementById('admin-player-filter-input').value);
+    }
+
+    function deletePlayer(playerId) {
+      const target = appState.players.find(p => p.id === playerId);
+      if (!target) return;
+      appState.players = appState.players.filter(p => p.id !== playerId);
+      addAuditLog(`Deleted player ${target.ign}.`);
+      saveState();
+      renderAdminPlayersList(document.getElementById('admin-player-filter-input').value);
+      showToast(`Removed ${target.ign}.`);
+    }
+
+    function renderAdminPlayersList(filter = '') {
+      const list = getRankedPlayers().filter(p => p.ign.toLowerCase().includes(filter.toLowerCase()));
+      document.getElementById('admin-player-count').textContent = appState.players.length;
+      document.getElementById('admin-players-list').innerHTML = list.map(p => `
+        <div class="bg-[#140f1d] border border-[#35274e] rounded-xl p-3 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="text-xs font-black text-[#ff4da6] w-7">#${p.overallRank}</span>
+            <img src="${getFallbackAvatarUrl(p.ign)}" alt="${p.ign}" class="w-8 h-8 rounded-lg bg-black/30" />
+            <div class="min-w-0">
+              <div class="text-sm font-bold text-[#f8fafc] truncate">${p.ign} <span class="text-[10px] text-purple-200/60">(${p.region})</span></div>
+              <div class="text-[11px] text-purple-200/65">${p.points} pts • ${getPlayerTitleInfo(p, p.points).title}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="editPlayerInAdmin('${p.id}')" class="px-3 py-1.5 rounded-lg bg-[#281d3b] hover:bg-[#ff2e88]/20 text-[#ff7ab8] text-xs font-semibold transition">Edit</button>
+            <button onclick="deletePlayer('${p.id}')" class="px-2.5 py-1.5 rounded-lg bg-[#281d3b] hover:bg-rose-500/20 text-rose-400 text-xs font-semibold transition">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleAddStaff(e) {
+      e.preventDefault();
+      if (loggedInStaff?.role === 'Tier Tester') {
+        showToast('Tier Testers cannot add staff accounts.', 'error');
+        return;
+      }
+      const username = document.getElementById('new-staff-username').value.trim();
+      const discord = document.getElementById('new-staff-discord').value.trim();
+      const password = document.getElementById('new-staff-password').value.trim();
+      const role = document.getElementById('new-staff-role').value;
+
+      if (appState.staff.some(s => s.username.toLowerCase() === username.toLowerCase())) {
+        showToast('Username already exists.', 'error');
+        return;
+      }
+
+      appState.staff.push({ id: 'staff-' + Date.now(), username, discord, password, role });
+      addAuditLog(`Added ${username} with role ${role}.`);
+      saveState();
+      e.target.reset();
+      renderAdminStaffList();
+      showToast(`Added ${username} (${role})!`);
+    }
+
+    function updateStaffRole(staffId, newRole) {
+      if (loggedInStaff?.role === 'Tier Tester') {
+        showToast('Insufficient permissions to change roles.', 'error');
+        renderAdminStaffList();
+        return;
+      }
+      const member = appState.staff.find(s => s.id === staffId);
+      if (!member) return;
+      member.role = newRole;
+      addAuditLog(`Changed ${member.username}'s role to ${newRole}.`);
+      saveState();
+      showToast(`Updated ${member.username}'s role to ${newRole}.`);
+    }
+
+    function removeStaff(staffId) {
+      const target = appState.staff.find(s => s.id === staffId);
+      if (!target) return;
+      if (target.username === 'MineheartStaff') {
+        showToast('Cannot remove the primary Owner account.', 'error');
+        return;
+      }
+      appState.staff = appState.staff.filter(s => s.id !== staffId);
+      addAuditLog(`Removed staff access for ${target.username}.`);
+      saveState();
+      renderAdminStaffList();
+      showToast(`Removed ${target.username}.`);
+    }
+
+    function renderAdminStaffList() {
+      document.getElementById('admin-staff-list').innerHTML = appState.staff.map(s => `
+        <div class="bg-[#140f1d] border border-[#35274e] rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="text-sm font-bold text-[#f8fafc] flex items-center gap-2">
+              <span>${s.username}</span>
+              ${s.discord ? `<span class="text-xs font-normal text-[#ff7ab8]">@${s.discord}</span>` : ''}
+            </div>
+            <div class="text-xs text-purple-200/60 mt-0.5">Password: <code class="text-[#f8fafc]">${s.password}</code></div>
+          </div>
+          <div class="flex items-center gap-2">
+            <select onchange="updateStaffRole('${s.id}', this.value)" class="bg-[#1e162c] border border-[#4e3973] rounded-lg px-2.5 py-1.5 text-xs text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]">
+              <option value="Owner" ${s.role === 'Owner' ? 'selected' : ''}>Owner</option>
+              <option value="Admin" ${s.role === 'Admin' ? 'selected' : ''}>Admin</option>
+              <option value="Tier Tester" ${s.role === 'Tier Tester' ? 'selected' : ''}>Tier Tester</option>
+            </select>
+            ${s.username !== 'MineheartStaff'
+              ? `<button onclick="removeStaff('${s.id}')" class="px-3 py-1.5 rounded-lg bg-rose-500/15 hover:bg-rose-500/30 text-rose-400 text-xs font-semibold transition">Remove</button>`
+              : '<span class="text-[11px] text-purple-200/50 px-2">Primary</span>'}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function populateSettingsForm() {
+      const s = appState.settings;
+      document.getElementById('setting-brand-left').value = s.brandLeft;
+      document.getElementById('setting-brand-right').value = s.brandRight;
+      document.getElementById('setting-hero-subtitle').value = s.heroSubtitle;
+      document.getElementById('setting-member-count').value = s.memberCount;
+      document.getElementById('setting-server-ip').value = s.serverIP;
+      document.getElementById('setting-online-players').value = s.onlinePlayers;
+      document.getElementById('setting-discord-url').value = s.discordUrl;
+      document.getElementById('setting-youtube-url').value = s.youtubeUrl;
+      document.getElementById('setting-hero-desc').value = s.heroDescription;
+      document.getElementById('setting-server-online').value = String(s.serverOnline !== false);
+
+      const codes = ['HT1', 'LT1', 'HT2', 'LT2', 'HT3', 'LT3', 'HT4', 'LT4', 'HT5', 'LT5'];
+      document.getElementById('admin-point-weights-grid').innerHTML = codes.map(c => `
+        <div class="bg-[#140f1d] border border-[#35274e] rounded-xl p-2.5">
+          <label class="block text-[11px] font-bold text-[#ff7ab8] mb-1">${c} Points</label>
+          <input id="weight-input-${c}" type="number" min="0" max="999" value="${getTierPoints(c)}" class="w-full bg-[#1e162c] border border-[#4e3973] rounded-lg px-2.5 py-1 text-xs text-[#f8fafc] focus:outline-none focus:border-[#ff2e88]" />
+        </div>
+      `).join('');
+    }
+
+    function handleSaveSettings(e) {
+      e.preventDefault();
+      if (loggedInStaff?.role === 'Tier Tester') {
+        showToast('Tier Testers cannot edit site settings.', 'error');
+        return;
+      }
+
+      appState.settings.brandLeft = document.getElementById('setting-brand-left').value.trim();
+      appState.settings.brandRight = document.getElementById('setting-brand-right').value.trim();
+      appState.settings.heroSubtitle = document.getElementById('setting-hero-subtitle').value.trim();
+      appState.settings.memberCount = document.getElementById('setting-member-count').value.trim();
+      appState.settings.serverIP = document.getElementById('setting-server-ip').value.trim();
+      appState.settings.onlinePlayers = document.getElementById('setting-online-players').value.trim();
+      appState.settings.discordUrl = document.getElementById('setting-discord-url').value.trim();
+      appState.settings.youtubeUrl = document.getElementById('setting-youtube-url').value.trim();
+      appState.settings.heroDescription = document.getElementById('setting-hero-desc').value.trim();
+      appState.settings.serverOnline = document.getElementById('setting-server-online').value === 'true';
+
+      const codes = ['HT1', 'LT1', 'HT2', 'LT2', 'HT3', 'LT3', 'HT4', 'LT4', 'HT5', 'LT5'];
+      codes.forEach(c => {
+        const val = parseInt(document.getElementById(`weight-input-${c}`).value, 10);
+        appState.pointWeights[c] = isNaN(val) ? 0 : val;
+      });
+
+      addAuditLog('Updated MineHeart branding, socials, server status, and point weights.');
+      saveState();
+      applySettingsToUI();
+      showToast('Site & branding settings saved!');
+    }
+
+    function clearEventForm() {
+      document.getElementById('edit-event-id').value = '';
+      document.getElementById('event-title-input').value = '';
+      document.getElementById('event-mode-input').value = 'Vanilla';
+      document.getElementById('event-prize-input').value = '';
+      document.getElementById('event-date-input').value = '';
+    }
+
+    function editEventInAdmin(eventId) {
+      const ev = appState.events.find(item => item.id === eventId);
+      if (!ev) return;
+      document.getElementById('edit-event-id').value = ev.id;
+      document.getElementById('event-title-input').value = ev.title;
+      document.getElementById('event-mode-input').value = ev.mode;
+      document.getElementById('event-prize-input').value = ev.prize;
+      document.getElementById('event-date-input').value = ev.date;
+    }
+
+    function handleSaveEvent(e) {
+      e.preventDefault();
+      const editId = document.getElementById('edit-event-id').value;
+      const title = document.getElementById('event-title-input').value.trim();
+      const mode = document.getElementById('event-mode-input').value;
+      const prize = document.getElementById('event-prize-input').value.trim();
+      const date = document.getElementById('event-date-input').value.trim();
+
+      if (editId) {
+        const idx = appState.events.findIndex(item => item.id === editId);
+        if (idx !== -1) {
+          appState.events[idx] = { ...appState.events[idx], title, mode, prize, date };
+          addAuditLog(`Edited event: ${title}.`);
+          showToast('Event updated!');
+        }
+      } else {
+        appState.events.unshift({ id: 'ev-' + Date.now(), title, mode, prize, date });
+        addAuditLog(`Created event: ${title}.`);
+        showToast('Event created!');
+      }
+
+      saveState();
+      clearEventForm();
+      renderAdminEventsList();
+    }
+
+    function deleteEvent(eventId) {
+      const ev = appState.events.find(item => item.id === eventId);
+      appState.events = appState.events.filter(item => item.id !== eventId);
+      addAuditLog(`Deleted event: ${ev ? ev.title : eventId}.`);
+      saveState();
+      renderAdminEventsList();
+      showToast('Event removed.');
+    }
+
+    function renderAdminEventsList() {
+      document.getElementById('admin-events-list').innerHTML = appState.events.map(ev => `
+        <div class="bg-[#140f1d] border border-[#35274e] rounded-xl p-3 flex items-center justify-between gap-2">
+          <div class="min-w-0">
+            <div class="text-xs font-bold text-[#f8fafc] truncate">${ev.title} <span class="text-[#ff4da6]">(${ev.mode})</span></div>
+            <div class="text-[11px] text-purple-200/65 truncate">${ev.prize} • ${ev.date}</div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="editEventInAdmin('${ev.id}')" class="px-2.5 py-1 rounded-lg bg-[#281d3b] text-[#ff7ab8] text-[11px] font-semibold">Edit</button>
+            <button onclick="deleteEvent('${ev.id}')" class="px-2.5 py-1 rounded-lg bg-[#281d3b] text-rose-400 text-[11px] font-semibold">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAdminAuditLog() {
+      document.getElementById('admin-audit-list').innerHTML = appState.auditLog.map(entry => `
+        <div class="p-2.5 rounded-lg bg-[#140f1d] border border-[#35274e] flex items-center justify-between gap-2">
+          <div>
+            <span class="font-bold text-[#ff7ab8]">${entry.user}:</span>
+            <span class="text-purple-100/80 ml-1">${entry.action}</span>
+          </div>
+          <span class="text-[10px] text-purple-200/50 shrink-0">${entry.time}</span>
+        </div>
+      `).join('');
+    }
+
+    function clearAuditLog() {
+      appState.auditLog = [];
+      addAuditLog('Cleared audit log.');
+      renderAdminAuditLog();
+    }
+
+    function resetToDefaultData() {
+      appState = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      saveState();
+      applySettingsToUI();
+      renderAdminView();
+      showToast('Restored default MineHeart data.');
+    }
+
+    // ==================== STARTUP ====================
+    window.addEventListener('DOMContentLoaded', () => {
+      mountHeartEmblems();
+      applySettingsToUI();
+      renderHome();
+    });
+  </script>
+</body>
+</html>
